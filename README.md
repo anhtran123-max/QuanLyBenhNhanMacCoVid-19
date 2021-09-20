@@ -1,0 +1,1 @@
+# quan_li_benh_nhan_mac_covid
