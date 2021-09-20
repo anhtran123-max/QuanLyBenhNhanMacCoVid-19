@@ -1,0 +1,9 @@
+sort(vector);
+push_back(vector);
+begin(vector);
+end(vector);
+at(vector);
+find(vector);
+erase(vector);
+make_pair(map);
+insert(map);
