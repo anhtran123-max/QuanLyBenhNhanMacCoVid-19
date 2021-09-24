@@ -12,13 +12,13 @@ class Patient : public DateTime{
     public:
         Patient();
         Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): DateTime(day, month, year);
-        string setId() const;
-        string setName() const;
-        string setAddress() const;
-        int setStatus() const;
-        string setInfect() const;
-        string setPlace() const;
-        int setQ_day() const;
+        string setId();
+        string setName();
+        string setAddress();
+        int setStatus();
+        string setInfect();
+        string setPlace();
+        int setQ_day();
         string getId() const;
         string getName() const;
         string getAddress() const;
