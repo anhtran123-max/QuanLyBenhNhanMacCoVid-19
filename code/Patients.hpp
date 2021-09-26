@@ -1,11 +1,20 @@
+#include "Patient.hpp"
 #include<bits/stdc++.h>
 
-class Patients {
+class Node {
+    public:
+        Patient data;
+        Node *next;
+        Node();//constructor
+};
+class LinkedList {
     private:
-        vector<Patient>list;
+        Node *head;
+        Node *tail;
     public: 
-        Patients(){
-            list = vector<Patient>();
+        LinkedList(){ //constructor
+            head = NULL;
+            tail = NULL;
         }
         bool existPatient(); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
