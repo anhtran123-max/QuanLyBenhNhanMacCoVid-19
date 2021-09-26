@@ -1,6 +1,6 @@
 #include "DateTime.hpp"
 #include<bits/stdc++.h>
-
+using namespace std;
 class Patient : public DateTime{
     private:
         string id;
@@ -11,7 +11,7 @@ class Patient : public DateTime{
         string place; //noi cach ly
         int q_day; // so ngay cach ly
     public:
-        Patient();
+        Patient(): DateTime();
         Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): DateTime(day, month, year);
         string setId();
         string setName();
@@ -30,3 +30,21 @@ class Patient : public DateTime{
         friend istream(); // nhap
         display();// xuat
 };
+Patient::Patient(): DateTime(){
+    this->id = 0;
+    this->name = "";
+    this->address = "";
+    this->status = 0;
+    this->infection = "NO";
+    this->place = "";
+    this->q_day = 0;
+}
+Patient::Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): DateTime(day, month, year){
+    this->id = id;
+    this->name = name;
+    this->address = address;
+    this->status = status;
+    this->infection = infection;
+    this->place = place;
+    this->q_day = q_day;
+}

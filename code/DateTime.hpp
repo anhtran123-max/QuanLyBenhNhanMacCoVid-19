@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-
+using namespace std;
 class DateTime{
     private:
         int day;
