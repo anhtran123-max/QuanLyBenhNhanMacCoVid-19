@@ -1,28 +1,39 @@
+#pragma once
 #include<bits/stdc++.h>
 using namespace std;
-class DateTime{
+class Datetime{
     private:
         int day;
         int month;
         int year;
     public:
-        DateTime();
-        ~DateTime();
-        DateTime(int day, int month, int year);
-        int setDay();
-        int satMonth();
-        int setYear();
+        Datetime();
+        ~Datetime(){}
+        Datetime(int day, int month, int year);
+        void setDay(int day);
+        void setMonth(int month);
+        void setYear(int year);
         int getDay();
         int getMonth();
         int getYear();
 };
-DateTime::DateTime(){
+Datetime::Datetime(){
     this->day = 0;
     this->month = 0;
     this->year = 0;
 }
-DateTime::DateTime(int day, int month, int year){
+Datetime::Datetime(int day, int month, int year){
     this->day = day;
     this->month = month;
     this->year = year;
 }
+void Datetime::setDay(int day) {
+    this->day = day;
+}
+void Datetime::setMonth(int month) {
+    this->month = month;
+}
+void Datetime::setYear(int year) {
+    this->year = year;
+}
+// TODO: viết các hàm getter
