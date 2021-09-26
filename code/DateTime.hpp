@@ -7,6 +7,7 @@ class DateTime{
         int year;
     public:
         DateTime();
+        ~DateTime();
         DateTime(int day, int month, int year);
         int setDay();
         int satMonth();

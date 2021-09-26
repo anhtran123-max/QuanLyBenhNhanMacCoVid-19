@@ -12,6 +12,7 @@ class Patient : public DateTime{
         int q_day; // so ngay cach ly
     public:
         Patient(): DateTime();
+        ~Patient();
         Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): DateTime(day, month, year);
         string setId();
         string setName();
