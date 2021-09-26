@@ -32,6 +32,7 @@ class LinkedList {
         void exportPatients(); //xuất file
 
 };
+//TODO: viết 2 hàm bool
 void LinkedList::add(Patient val){
     Node *node = new Node(val);
     if(head == NULL){

@@ -48,6 +48,8 @@ class Patient:public Datetime {
         friend istream& operator>>(istream &input, Patient &patient); // nhap
         void display();// xuat
 };
+//TODO: viết các hàm setter và getter
+//TODO: thêm hàm kiểm tra ngày tháng năm
 istream& operator>>(istream &input, Patient &patient){
     int day, month, year;
     cout<<"id: ";
