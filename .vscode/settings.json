@@ -71,7 +71,9 @@
         "cstdarg": "cpp",
         "cwctype": "cpp",
         "memory_resource": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp"
     },
     "python.pythonPath": "C:\\Users\\ASIA\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 }
