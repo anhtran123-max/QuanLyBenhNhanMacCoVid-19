@@ -46,3 +46,9 @@ void LinkedList::add(Patient val){
         cur->next = node;
     }
 }
+bool LinkedList::existPatient(){
+
+}
+bool LinkedList::validInfection(){
+    
+}
