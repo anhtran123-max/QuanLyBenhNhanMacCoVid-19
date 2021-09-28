@@ -62,7 +62,7 @@ void Patient::setStatus(){
     this->status=status;
 }
 void Patient::setInfect(){
-    this->infect=infect;
+    this->infection=infection;
 }
 void Patient::setPlace(){
     this->place=place;
@@ -72,7 +72,6 @@ void Patient::setQ_day(){
 }
 string Patient::getId(){
     return id;
-
 }
 string Patient::getName(){
     return name;
@@ -81,10 +80,10 @@ string Patient::getAddress(){
     return address;
 }
 int Patient::getStatus(){
-    return status
+    return status;
 }
 string Patient::getInfect(){
-    return infect;
+    return infection;
 }
 string Patient::getPlace(){
     return place;
