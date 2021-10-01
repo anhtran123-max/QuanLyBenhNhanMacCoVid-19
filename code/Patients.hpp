@@ -23,8 +23,8 @@ class BST {
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
         Node* search(Node* root, Patient val);//tìm kiếm
-        Patient leftOf( const Patient val, const Node* root );
-        Patient rightOf( const Patient val, const Node* root );
+        bool leftOf(Patient val, Node* root );
+        bool rightOf(Patient val, Node* root );
         Patient leftMostValue( const Node* root );
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
@@ -37,21 +37,6 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 //TODO: viết 2 hàm bool
-<<<<<<< HEAD
-void LinkedList::add(Patient val){
-    Node *node = new Node(val);
-    if(head == NULL){
-        head = node;
-    }
-    else{
-        Node *cur = head;
-        while(cur->next != NULL){
-            cur = cur->next;
-        }
-        cur->next = node;
-    }
-}
-=======
 Node* BST::add(Node* root, Patient val) {
     if(root == NULL) return new Node(val);
     if(val.getId()<root->data.getId())
@@ -60,27 +45,19 @@ Node* BST::add(Node* root, Patient val) {
         root->right = add(root->right, val);
     return root;
 }
-void BST::function(void){
-    Patient a,b,c;
-    cin>>a>>b>>c;
-    root = add(root,a);
-    root = add(root,b);
-    root = add(root,c);
-}
->>>>>>> ba76e69e465e4b37ba98181261b6444bf90d66bb
-Patient BST::leftOf( const Patient val, const Node* root )
+bool BST::leftOf(Patient val, Node* root )
 {
-    return val < root->data; 
+    return val.getId() < root->data.getId(); 
 }
  
-Patient BST::rightOf( const Patient val, const Node* root )
+bool BST::rightOf(Patient val, Node* root )
 {
-    return val > root->data;
+    return val.getId() > root->data.getId(); 
 }
 Patient BST::leftMostValue( const Node* root ){
     while ( root->left != NULL )
         root = root->left;
-    return root->data;    
+    return root->data;
 }
 void BST::Free( Node* root )
 {
@@ -99,17 +76,25 @@ Node* BST::erase(Node* root, Patient val){
     else {
         if(root->left ==NULL){
             Node* newRoot=root->right;
-            free(root);
+            Free(root);
             return newRoot;
         }
         if ( root->right == NULL )
         {
             Node* newRoot = root->left;
-            free(root);
+            Free(root);
             return newRoot;
         }
-        root->data = LeftMostValue( root->right );
-        root->right = Delete( root->right, root->data );
+        root->data = leftMostValue(root->right);
+        root->right = erase( root->right, root->data );
     }
     return root;
+}
+void BST::function(void){
+    Patient a,b,c;
+    cin>>a>>b>>c;
+    root = add(root,a);
+    root = add(root,b);
+    root = add(root,c);
+    erase(root,a);
 }
