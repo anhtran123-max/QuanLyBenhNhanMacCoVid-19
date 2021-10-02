@@ -94,10 +94,10 @@ void BST::function(void){
     Patient a,b,c,d,e,f,g;
     cin>>a>>b>>c>>d>>e>>f>>g;
     root = add(root,a); //id = 4
-    root = add(root,b); //id = 3
+    root = add(root,b); //id = 2
     root = add(root,c); //id = 6
     root = add(root,d); //id = 1
-    root = add(root,e); //id = 2
+    root = add(root,e); //id = 3
     root = add(root,f); //id = 5
     root = add(root,g); //id = 7
     erase(root,a); //xóa cái 4
