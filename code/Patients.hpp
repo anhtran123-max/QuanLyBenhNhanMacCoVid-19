@@ -61,10 +61,11 @@ Patient BST::leftMostValue( const Node* root ){
 }
 void BST::Free( Node* root )
 {
-    if ( root )
+    if ( root ){
     Free( root->left );
     Free( root->right );
     delete root;
+    }
 }
 Node* BST::erase(Node* root, Patient val){
     if(root == NULL) return root;
