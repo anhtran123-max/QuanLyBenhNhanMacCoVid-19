@@ -93,8 +93,12 @@ Node* BST::erase(Node* root, Patient val){
 void BST::function(void){
     Patient a,b,c;
     cin>>a>>b>>c;
-    root = add(root,a); //id = 2
-    root = add(root,b); //id = 1
-    root = add(root,c); //id = 3
-    erase(root,a); //xóa cái 2
+    root = add(root,a); //id = 4
+    root = add(root,b); //id = 3
+    root = add(root,c); //id = 5
+    root = add(root,d); //id = 1
+    root = add(root,e); //id = 2
+    root = add(root,f); //id = 6
+    root = add(root,g); //id = 7
+    erase(root,a); //xóa cái 4
 }
