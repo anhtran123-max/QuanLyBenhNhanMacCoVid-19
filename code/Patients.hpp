@@ -22,7 +22,7 @@ class BST {
         bool existPatient(); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
-        Node* search(Node* root, Patient val);//tìm kiếm
+        bool search(Node* root, Patient val);//tìm kiếm
         bool leftOf(Patient val, Node* root );
         bool rightOf(Patient val, Node* root );
         Patient leftMostValue( const Node* root );
@@ -47,23 +47,23 @@ Node* BST::add(Node* root, Patient val) {
 }
 bool BST::leftOf(Patient val, Node* root )
 {
-    return val.getId() < root->data.getId(); 
+    return val.getId() < root->data.getId();
 }
  
 bool BST::rightOf(Patient val, Node* root )
 {
-    return val.getId() > root->data.getId(); 
+    return val.getId() > root->data.getId();
 }
 Patient BST::leftMostValue( const Node* root ){
-    while ( root->left != NULL )
+    while (root->left != NULL)
         root = root->left;
     return root->data;
 }
-void BST::Free( Node* root )
+void BST::Free(Node* root)
 {
-    if ( root ){
-    Free( root->left );
-    Free( root->right );
+    if (root){
+    Free(root->left);
+    Free(root->right);
     delete root;
     }
 }
@@ -79,16 +79,27 @@ Node* BST::erase(Node* root, Patient val){
             free(root);
             return newRoot;
         }
-        if ( root->right == NULL )
+        if (root->right == NULL)
         {
             Node* newRoot = root->left;
             free(root);
             return newRoot;
         }
         root->data = leftMostValue(root->right);
-        root->right = erase( root->right, root->data );
+        root->right = erase(root->right, root->data);
     }
     return root;
+}
+bool BST::search(Node* root, Patient val){
+    if (root == NULL)
+        return false;
+    if(root->data.getId() == val.getId()){
+        return true;
+    }else if (leftOf(val, root)){
+        return search(root->left, val);
+    }else if(rightOf(val, root)){
+        return search(root->right, val);
+    }
 }
 void BST::function(void){
     Patient a,b,c,d,e,f,g;
@@ -101,4 +112,5 @@ void BST::function(void){
     root = add(root,f); //id = 5
     root = add(root,g); //id = 7
     erase(root,a); //xóa cái 4
+    Free(a);
 }
