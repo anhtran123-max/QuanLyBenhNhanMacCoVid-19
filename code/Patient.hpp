@@ -122,4 +122,5 @@ istream& operator>>(istream &input, Patient &patient){
     cout<<"Day need to quarantine: ";
     fflush(stdin);
     input>>patient.q_day;
+    return input;
 }
