@@ -37,6 +37,12 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 //TODO: viết 2 hàm bool
+bool BST::existPatient(){
+
+}
+bool BST::validInfection(){
+
+}
 Node* BST::add(Node* root, Patient val) {
     if(root == NULL) return new Node(val);
     if(val.getId()<root->data.getId())
