@@ -46,8 +46,6 @@ bool BST::existPatient(){
 bool BST::validInfection(){
 
 }
-Node* BST::add(Node* root, Patient val) {
-    if(root == NULL) return new Node(val);
 Node* BST::add(Node* root, Patient val){
     if(root == NULL)
         return new Node(val);
