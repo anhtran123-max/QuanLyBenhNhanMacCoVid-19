@@ -24,7 +24,7 @@ class BST {
         bool existPatient(); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
-        bool search(Node* root, Patient val);//tìm kiếm
+        Node* search(Node* root, Patient val);//tìm kiếm
         bool leftOf(Patient val, Node* root );
         bool rightOf(Patient val, Node* root );
         Patient leftMostValue( const Node* root );
@@ -93,11 +93,11 @@ Node* BST::erase(Node* root, Patient val){
     }
     return root;
 }
-bool BST::search(Node* root, Patient val){
+Node* BST::search(Node* root, Patient val){
     if (root == NULL)
-        return false;
+        return NULL;
     if(root->data.getId() == val.getId()){
-        return true;
+        return root;
     }else if (leftOf(val, root)){
         return search(root->left, val);
     }else if(rightOf(val, root)){
