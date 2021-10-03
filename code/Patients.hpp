@@ -15,9 +15,11 @@ class Node {
 class BST {
     private:
         Node *root;
+        int size;
     public: 
         BST(){ //constructor
             root = NULL;
+            size = 0;
         }
         bool existPatient(); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
@@ -37,24 +39,25 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 //TODO: viết 2 hàm bool
-Node* BST::add(Node* root, Patient val) {
-    if(root == NULL) return new Node(val);
+Node* BST::add(Node* root, Patient val){
+    if(root == NULL)
+        return new Node(val);
     if(val.getId()<root->data.getId())
         root->left = add(root->left, val);
     else
         root->right = add(root->right, val);
     return root;
 }
-bool BST::leftOf(Patient val, Node* root )
+bool BST::leftOf(Patient val, Node* root)
 {
     return val.getId() < root->data.getId();
 }
  
-bool BST::rightOf(Patient val, Node* root )
+bool BST::rightOf(Patient val, Node* root)
 {
     return val.getId() > root->data.getId();
 }
-Patient BST::leftMostValue( const Node* root ){
+Patient BST::leftMostValue(const Node* root){
     while (root->left != NULL)
         root = root->left;
     return root->data;
@@ -102,6 +105,14 @@ bool BST::search(Node* root, Patient val){
     }
 }
 void BST::function(void){
+    // int n;
+    // cout<<"Enter amount of patients: "; cin>>n;
+    // for(int i=0; i<n; i++){
+    //     Patient a;
+    //     cin>>a;
+    //     root = add(root,a);
+    //     size++;
+    // }
     Patient a,b,c,d,e,f,g;
     cin>>a>>b>>c>>d>>e>>f>>g;
     root = add(root,a); //id = 4
@@ -112,5 +123,6 @@ void BST::function(void){
     root = add(root,f); //id = 5
     root = add(root,g); //id = 7
     erase(root,a); //xóa cái 4
-    Free(a);
+    // size--;
+    Free(root);
 }
