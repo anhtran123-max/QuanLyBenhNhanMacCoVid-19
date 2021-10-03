@@ -30,6 +30,7 @@ class BST {
         Patient leftMostValue( const Node* root );
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
+        void inOrder(Node* root);//duyệt giữa
         void edit(); //sửa bệnh nhân
         void sort(); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
