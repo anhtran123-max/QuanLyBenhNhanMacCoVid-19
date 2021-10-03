@@ -1,4 +1,5 @@
 #include "Patient.hpp"
+#include "Doubly.hpp"
 #include<bits/stdc++.h>
 
 class Node {
