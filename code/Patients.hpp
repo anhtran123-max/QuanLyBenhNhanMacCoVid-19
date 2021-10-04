@@ -2,7 +2,7 @@
 #include "Doubly.hpp"
 #include<bits/stdc++.h>
 
-class Node {
+class Node{
     public:
         Patient data;
         Node *left;
@@ -41,8 +41,7 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 bool BST::existPatient(Node* root, string id){ //duyệt trước
-   if(root != NULL)
-    {
+    if(root != NULL){
         if(root->data.getId()==id){
             return true;
         }
@@ -69,23 +68,19 @@ Node* BST::add(Node* root, Patient val){
         root->right = add(root->right, val);
     return root;
 }
-bool BST::leftOf(Patient val, Node* root )
-{
+bool BST::leftOf(Patient val, Node* root ){
     return val.getId() < root->data.getId(); 
 }
- 
-bool BST::rightOf(Patient val, Node* root )
-{
+bool BST::rightOf(Patient val, Node* root ){
     return val.getId() > root->data.getId(); 
 }
 Patient BST::leftMostValue( const Node* root ){
-    while (root->left != NULL)
+    while(root->left != NULL)
         root = root->left;
     return root->data;
 }
-void BST::Free( Node* root )
-{
-    if (root){
+void BST::Free( Node* root ){
+    if(root){
         Free(root->left);
         Free(root->right);
         delete root;
@@ -103,8 +98,7 @@ Node* BST::erase(Node* root, Patient val){
             free(root);
             return newRoot;
         }
-        if (root->right == NULL)
-        {
+        if (root->right == NULL){
             Node* newRoot = root->left;
             free(root);
             return newRoot;
@@ -126,9 +120,11 @@ Node* BST::search(Node* root, Patient val){
         return NULL;
     if(root->data.getId() == val.getId()){
         return root;
-    }else if (leftOf(val, root)){
+    }
+    else if (leftOf(val, root)){
         return search(root->left, val);
-    }else if(rightOf(val, root)){
+    }
+    else if(rightOf(val, root)){
         return search(root->right, val);
     }
 }
