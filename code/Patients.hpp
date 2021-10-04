@@ -23,7 +23,7 @@ class BST {
             size = 0;
         }
         bool existPatient(Node* root, string id); //kiểm tra trùng id
-        bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
+        bool validInfection(Node* root, string infection); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
         Node* search(Node* root, Patient val);//tìm kiếm
         bool leftOf(Patient val, Node* root );
@@ -52,7 +52,7 @@ bool BST::existPatient(Node* root, string id){ //duyệt trước
     }
     return false;
 }
-bool BST::validInfection(){ //duyệt sau
+bool BST::validInfection(Node* root, string infection){ //duyệt sau
 //hihi
 }
 Node* BST::add(Node* root, Patient val){
