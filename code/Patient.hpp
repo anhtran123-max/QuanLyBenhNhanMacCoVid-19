@@ -31,7 +31,6 @@ class Patient:public Datetime {
             this->place = place;
             this->q_day = q_day;
         }
-        bool timeTest();
         void setId();
         void setName();
         void setAddress();
@@ -49,20 +48,19 @@ class Patient:public Datetime {
         friend istream& operator>>(istream &input, Patient &patient); // nhap
         void display();// xuat
 };
-bool Patient::timeTest(){
-    Patient patient;
-    if (patient.getYear()<0 || patient.getMonth()<0 || patient.getMonth()> 12 || patient.getDay()<0 || patient.getDay()> 31) return false;
-    if(patient.getMonth()==1 || patient.getMonth() ==3 || patient.getMonth() == 5 || patient.getMonth() ==7 || patient.getMonth() ==8 || patient.getMonth() ==10 || patient.getMonth()==12){
-        if(patient.getDay() == 31) return true;
+bool timeTest(int day, int month, int year){
+    if (year<0 || month<0 || month> 12 || day<0 || day> 31) return false;
+    if(month==1 || month ==3 || month == 5 || month ==7 || month ==8 || month ==10 || month==12){
+        if(day == 31) return true;
     }
-    if(patient.getMonth()==4 || patient.getMonth() ==6 || patient.getMonth() == 9 || patient.getMonth() ==11){
-        if(patient.getDay() == 30) return true;
+    if(month==4 || month ==6 || month == 9 || month ==11){
+        if(day == 30) return true;
     }  
-    if(patient.getYear() %4 ==0 && patient.getYear() !=0){
-        if(patient.getDay()==29) return true;
+    if(year %4 ==0 && year !=0){
+        if(day==29) return true;
     }  
     else{
-        if(patient.getDay()==28) return true;
+        if(day==28) return true;
     }
 }
 void Patient::setId(){
@@ -114,15 +112,20 @@ istream& operator>>(istream &input, Patient &patient){
     cout<<"Name: ";
     fflush(stdin);
     getline(input,patient.name);
-    cout<<"Birthday: "<<endl;
+    cout<<"-Birthday: "<<endl;
+    do{
     cout<<"Day: ";
     input>>day;
-    patient.setDay(day);
     cout<<"Month: ";
     input>>month;
-    patient.setMonth(month);
     cout<<"Year: ";
     input>>year;
+    if(!timeTest(day, month, year)){
+        cout<<"Error, enter again!"<<endl;
+    }
+    }while(!timeTest(day,month,year));
+    patient.setDay(day);
+    patient.setMonth(month);
     patient.setYear(year);
     cout<<"Address: ";
     fflush(stdin);

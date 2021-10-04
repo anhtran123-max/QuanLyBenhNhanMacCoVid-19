@@ -1,4 +1,5 @@
 #include "Patient.hpp"
+#include "Doubly.hpp"
 #include<bits/stdc++.h>
 
 class Node {
@@ -45,8 +46,14 @@ bool BST::existPatient(){
 bool BST::validInfection(){
 
 }
+<<<<<<< HEAD
 Node* BST::add(Node* root, Patient val) {
     if(root == NULL) return new Node(val);
+=======
+Node* BST::add(Node* root, Patient val){
+    if(root == NULL)
+        return new Node(val);
+>>>>>>> d9957489dd8924f2cdb4190c966c442ef9305221
     if(val.getId()<root->data.getId())
         root->left = add(root->left, val);
     else
