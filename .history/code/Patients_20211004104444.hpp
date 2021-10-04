@@ -57,8 +57,7 @@ bool BST::validInfection(Node* root, string infection){ //duyệt sau
         validInfection(root->left,,infection);
         validInfection(root->right,infection);
         if(root->data.getId() == infection) return true;
-        if(existPatient(root->data,infection)== true && infection == 'NO') return true;
-    }
+    }\
     return false;
 }
 Node* BST::add(Node* root, Patient val){
