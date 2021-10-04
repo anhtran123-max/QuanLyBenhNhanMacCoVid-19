@@ -52,7 +52,7 @@ bool BST::existPatient(Node* root, string id){ //duyệt trước
     }
     return false;
 }
-bool BST::validInfection(){
+bool BST::validInfection(){ //duyệt sau
 //hihi
 }
 Node* BST::add(Node* root, Patient val){
