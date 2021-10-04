@@ -16,9 +16,11 @@ class Node {
 class BST {
     private:
         Node *root;
+        int size;
     public: 
         BST(){ //constructor
             root = NULL;
+            size = 0;
         }
         bool existPatient(); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
@@ -29,6 +31,7 @@ class BST {
         Patient leftMostValue( const Node* root );
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
+        void inOrder(Node* root);//duyệt giữa
         void edit(); //sửa bệnh nhân
         void sort(); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
@@ -65,17 +68,17 @@ bool BST::rightOf(Patient val, Node* root )
     return val.getId() > root->data.getId(); 
 }
 Patient BST::leftMostValue( const Node* root ){
-    while ( root->left != NULL )
+    while (root->left != NULL)
         root = root->left;
     return root->data;
 }
 void BST::Free( Node* root )
 {
-    if ( root == NULL )
-        return;
-    Free( root->left );
-    Free( root->right );
-    free( root );
+    if (root){
+        Free(root->left);
+        Free(root->right);
+        delete root;
+    }
 }
 Node* BST::erase(Node* root, Patient val){
     if(root == NULL) return root;
@@ -86,25 +89,50 @@ Node* BST::erase(Node* root, Patient val){
     else {
         if(root->left ==NULL){
             Node* newRoot=root->right;
-            Free(root);
+            free(root);
             return newRoot;
         }
-        if ( root->right == NULL )
+        if (root->right == NULL)
         {
             Node* newRoot = root->left;
-            Free(root);
+            free(root);
             return newRoot;
         }
         root->data = leftMostValue(root->right);
-        root->right = erase( root->right, root->data );
+        root->right = erase(root->right, root->data);
     }
     return root;
 }
+Node* BST::search(Node* root, Patient val){
+    if (root == NULL)
+        return NULL;
+    if(root->data.getId() == val.getId()){
+        return root;
+    }else if (leftOf(val, root)){
+        return search(root->left, val);
+    }else if(rightOf(val, root)){
+        return search(root->right, val);
+    }
+}
 void BST::function(void){
-    Patient a,b,c;
-    cin>>a>>b>>c;
-    root = add(root,a); //id = 2
-    root = add(root,b); //id = 1
-    root = add(root,c); //id = 3
-    erase(root,a); //xóa cái 2
+    // int n;
+    // cout<<"Enter amount of patients: "; cin>>n;
+    // for(int i=0; i<n; i++){
+    //     Patient a;
+    //     cin>>a;
+    //     root = add(root,a);
+    //     size++;
+    // }
+    Patient a,b,c,d,e,f,g;
+    cin>>a>>b>>c>>d>>e>>f>>g;
+    root = add(root,a); //id = 4
+    root = add(root,b); //id = 2
+    root = add(root,c); //id = 6
+    root = add(root,d); //id = 1
+    root = add(root,e); //id = 3
+    root = add(root,f); //id = 5
+    root = add(root,g); //id = 7
+    erase(root,a); //xóa cái 4
+    // size--;
+    Free(root);
 }
