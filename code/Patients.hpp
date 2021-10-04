@@ -53,11 +53,11 @@ bool BST::existPatient(Node* root, string id){ //duyệt trước
     return false;
 }
 bool BST::validInfection(Node* root, string infection){ //duyệt sau
+    if(infection == "NO") return true;
     if(root != NULL){
-        validInfection(root->left,,infection);
+        validInfection(root->left,infection);
         validInfection(root->right,infection);
         if(root->data.getId() == infection) return true;
-        if(existPatient(root->data,infection)== true || infection == 'NO') return true;
     }
     return false;
 }
@@ -137,13 +137,17 @@ void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
     for(int i=0; i<n; i++){
+        cout<<"-->Enter infomation of Patent "<<i+1<<endl;
         Patient a;
         do{
         cin>>a;
         if(existPatient(root,a.getId())){
             cout<<"Same id, enter again!!"<<endl;
         }
-        }while(existPatient(root, a.getId()));
+        if(!validInfection(root,a.getInfect())){
+            cout<<"Invalid Infection!!"<<endl;
+        }
+        }while(existPatient(root, a.getId()) && !validInfection(root, a.getInfect()));
         root = add(root,a);
         size++;
     }
