@@ -22,7 +22,7 @@ class BST {
             root = NULL;
             size = 0;
         }
-        bool existPatient(); //kiểm tra trùng id
+        bool existPatient(Node* root, string id); //kiểm tra trùng id
         bool validInfection(); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
         Node* search(Node* root, Patient val);//tìm kiếm
@@ -41,10 +41,16 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 //TODO: viết 2 hàm bool
-bool BST::existPatient(){
-   Patient val;
-   if(root->data.getId() == val.getId()) return false;
-   return true;  
+bool BST::existPatient(Node* root, string id){ //duyệt trước
+   if(root != NULL)
+    {
+        if(root->data.getId()==id){
+            return true;
+        }
+        existPatient(root->left, id);
+        existPatient(root->right, id);
+    }
+    return false;
 }
 bool BST::validInfection(){
 //hihi
@@ -115,24 +121,29 @@ Node* BST::search(Node* root, Patient val){
     }
 }
 void BST::function(void){
-    // int n;
-    // cout<<"Enter amount of patients: "; cin>>n;
-    // for(int i=0; i<n; i++){
-    //     Patient a;
-    //     cin>>a;
-    //     root = add(root,a);
-    //     size++;
-    // }
-    Patient a,b,c,d,e,f,g;
-    cin>>a>>b>>c>>d>>e>>f>>g;
-    root = add(root,a); //id = 4
-    root = add(root,b); //id = 2
-    root = add(root,c); //id = 6
-    root = add(root,d); //id = 1
-    root = add(root,e); //id = 3
-    root = add(root,f); //id = 5
-    root = add(root,g); //id = 7
-    erase(root,a); //xóa cái 4
+    int n;
+    cout<<"Enter amount of patients: "; cin>>n;
+    for(int i=0; i<n; i++){
+        Patient a;
+        do{
+        cin>>a;
+        if(existPatient(root,a.getId())){
+            cout<<"Same id, enter again!!"<<endl;
+        }
+        }while(existPatient(root, a.getId()));
+        root = add(root,a);
+        size++;
+    }
+    // Patient a,b,c,d,e,f,g;
+    // cin>>a>>b>>c>>d>>e>>f>>g;
+    // root = add(root,a); //id = 4
+    // root = add(root,b); //id = 2
+    // root = add(root,c); //id = 6
+    // root = add(root,d); //id = 1
+    // root = add(root,e); //id = 3
+    // root = add(root,f); //id = 5
+    // root = add(root,g); //id = 7
+    // erase(root,a); //xóa cái 4
     // size--;
     Free(root);
 }
