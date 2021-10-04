@@ -31,9 +31,9 @@ class BST {
         Patient leftMostValue( const Node* root );
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
-        void inOrder(Node* root);//duyệt giữa
+        DList inOrder(Node* root);//duyệt giữa
         void edit(); //sửa bệnh nhân
-        void sort(); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
+        void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
         void F(); //thống kê các F (nếu có map thì dùng, k thì thoi)
         void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
@@ -115,12 +115,14 @@ Node* BST::erase(Node* root, Patient val){
     }
     return root;
 }
-void BST::inOrder(Node* root){
+DList d;
+DList BST::inOrder(Node* root){
     if(root != NULL){
         inOrder(root->left);
-        printf("%d ", root->data);
+        d.push(root->data);
         inOrder(root->right);
     }
+    return d;
 }
 Node* BST::search(Node* root, Patient val){
     if (root == NULL)
@@ -131,6 +133,19 @@ Node* BST::search(Node* root, Patient val){
         return search(root->left, val);
     }else if(rightOf(val, root)){
         return search(root->right, val);
+    }
+}
+void BST::sortByName(Node* root){
+    DList a = inOrder(root);
+    Patient temp;
+    for(DNode* p = a.getHead(); p->next != NULL; p = p->next){
+        for(DNode* q = a.getTail(); q != p; q = q->prev){
+            if(p->data.getName()>q->data.getName()){
+                temp = p->data;
+                p->data = q->data;
+                q->data = temp;
+            }
+        }
     }
 }
 void BST::function(void){
@@ -151,6 +166,7 @@ void BST::function(void){
         root = add(root,a);
         size++;
     }
+    sortByName(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4
