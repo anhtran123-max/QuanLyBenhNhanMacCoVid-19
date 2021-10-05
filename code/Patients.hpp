@@ -88,20 +88,28 @@ bool BST::validInfection(string infection){ //duyệt sau
     }
     return false;
 }
+bool compare(string str1, string str2){ //hàm ngoài
+    int n=str1.length();
+    int m=str2.length();
+    if(n==m)
+        return (str1<str2);
+    
+    return n<m;
+}
 Node* BST::add(Node* root, Patient val){
     if(root == NULL)
         return new Node(val);
-    if(val.getId()<root->data.getId())
+    if(compare(val.getId(),root->data.getId()))
         root->left = add(root->left, val);
     else
         root->right = add(root->right, val);
     return root;
 }
 bool BST::leftOf(Patient val, Node* root ){
-    return val.getId() < root->data.getId(); 
+    return compare(val.getId(),root->data.getId()); 
 }
 bool BST::rightOf(Patient val, Node* root ){
-    return val.getId() > root->data.getId(); 
+    return compare(root->data.getId(),val.getId()); 
 }
 Patient BST::leftMostValue( const Node* root ){
     while(root->left != NULL)
@@ -166,22 +174,6 @@ void BST::sortByName(Node* root){
             }
         }
     }
-}
-bool checkSubString(string str1, string str2){
-    if(str2.size() > str1.size()) return false;
-    for(int i = 0; i < str1.size(); i++){
-        int j = 0;
-        if(str1[i] == str2[j]){
-            int tmp = i;
-            while (str1[i] == str2[j] && j < str2.size()){
-                j++;
-                i++;
-            }
-            if (j == str2.size()) return true;
-            else i = tmp;
-        }   
-    }
-    return false;
 }
 
 void BST::function(void){

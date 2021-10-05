@@ -111,7 +111,7 @@ istream& operator>>(istream &input, Patient &patient){
     cout<<"id: ";
     input>>patient.id;
     cout<<"Name: ";
-    cin.ignore();
+    fflush(stdin);
     getline(input,patient.name);
     cout<<"-Birthday: "<<endl;
     do{
@@ -127,18 +127,18 @@ istream& operator>>(istream &input, Patient &patient){
     patient.setMonth(month);
     patient.setYear(year);
     cout<<"Address: ";
-    cin.ignore();
+    fflush(stdin);
     getline(input,patient.address);
     cout<<"Status: ";
-    cin.ignore();
+    fflush(stdin);
     input>>patient.status;
     cout<<"Infection: ";
     input>>patient.infection;
     cout<<"Quarantine place: ";
-    cin.ignore();
+    fflush(stdin);
     getline(input,patient.place);
     cout<<"Day need to quarantine: ";
-    cin.ignore();
+    fflush(stdin);
     input>>patient.q_day;
     return input;
 }
