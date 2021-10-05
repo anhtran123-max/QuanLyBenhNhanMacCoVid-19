@@ -57,7 +57,7 @@ bool BST::validInfection(Node* root, string infection){ //duyệt sau
     if(root != NULL){
         validInfection(root->left,infection);
         validInfection(root->right,infection);
-        if(root->data.getId() == infection) return true;
+        if(infection == root->data.getId()) return true;
     }
     return false;
 }
@@ -156,13 +156,10 @@ void BST::function(void){
         Patient a;
         do{
         cin>>a;
-        if(existPatient(root,a.getId())){
-            cout<<"Same id, enter again!!"<<endl;
+        if(existPatient(root,a.getId()) || !validInfection(root,a.getInfect())){
+            cout<<"Same id or invalid infection, please enter again!!"<<endl;
         }
-        if(!validInfection(root,a.getInfect())){
-            cout<<"Invalid Infection!!"<<endl;
-        }
-        }while(existPatient(root, a.getId()) && !validInfection(root, a.getInfect()));
+        }while((existPatient(root, a.getId())) && (!validInfection(root, a.getInfect())));
         root = add(root,a);
         size++;
     }
