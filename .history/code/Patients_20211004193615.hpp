@@ -2,7 +2,7 @@
 #include "Doubly.hpp"
 #include<bits/stdc++.h>
 
-class Node{
+class Node {
     public:
         Patient data;
         Node *left;
@@ -41,7 +41,8 @@ class BST {
         void function(void); //hàm thực thi các thao tác
 };
 bool BST::existPatient(Node* root, string id){ //duyệt trước
-    if(root != NULL){
+    if(root != NULL)
+    {
         if(root->data.getId()==id){
             return true;
         }
@@ -75,12 +76,12 @@ bool BST::rightOf(Patient val, Node* root ){
     return val.getId() > root->data.getId(); 
 }
 Patient BST::leftMostValue( const Node* root ){
-    while(root->left != NULL)
+    while (root->left != NULL)
         root = root->left;
     return root->data;
 }
 void BST::Free( Node* root ){
-    if(root){
+    if (root){
         Free(root->left);
         Free(root->right);
         delete root;
@@ -98,7 +99,7 @@ Node* BST::erase(Node* root, Patient val){
             free(root);
             return newRoot;
         }
-        if(root->right == NULL){
+        if (root->right == NULL){
             Node* newRoot = root->left;
             free(root);
             return newRoot;

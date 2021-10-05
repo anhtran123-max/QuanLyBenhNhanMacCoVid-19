@@ -98,7 +98,7 @@ Node* BST::erase(Node* root, Patient val){
             free(root);
             return newRoot;
         }
-        if(root->right == NULL){
+        if (root->right == NULL){
             Node* newRoot = root->left;
             free(root);
             return newRoot;
