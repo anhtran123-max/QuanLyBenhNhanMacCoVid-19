@@ -174,6 +174,7 @@ void BST::sortByName(Node* root){
             }
         }
     }
+    a.print();
 }
 
 void BST::function(void){

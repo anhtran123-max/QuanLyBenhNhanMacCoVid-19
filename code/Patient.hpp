@@ -46,7 +46,7 @@ class Patient:public Datetime {
         string getPlace();
         int getQ_day();
         friend istream& operator>>(istream &input, Patient &patient); // nhap
-        void display();// xuat
+        friend ostream& operator<<(ostream &ouput, Patient patient); //xuat
 };
 bool timeTest(int day, int month, int year){
     if (year<0 || month<0 || month> 12 || day<0 || day> 31) return false;
@@ -141,4 +141,8 @@ istream& operator>>(istream &input, Patient &patient){
     fflush(stdin);
     input>>patient.q_day;
     return input;
+}
+ostream& operator<<(ostream& output, Patient patient){
+    output<<"Id: "<<patient.id<<", Name: "<<patient.name<<" ("<<patient.getDay()<<","<<patient.getMonth()<<","<<patient.getYear()<<")"<<", Address: "<<patient.address<<endl;
+    output<<"Status: "<<patient.status<<", Infection: "<<patient.infection<<", Quarantine place: "<<patient.place<<", Day need to quarantine: "<<patient.q_day<<endl;
 }
