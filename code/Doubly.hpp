@@ -22,8 +22,17 @@ class DList{
             head = tail = NULL;
             size = 0;
         }
+        ~DList(){}
+        DNode* getHead();
+        DNode* getTail();
         void push(Patient val);
 };
+DNode* DList::getHead(){
+    return head;
+}
+DNode* DList::getTail(){
+    return tail;
+}
 void DList::push(Patient val){
     DNode* p = new DNode(val);
     if(size == 0){
