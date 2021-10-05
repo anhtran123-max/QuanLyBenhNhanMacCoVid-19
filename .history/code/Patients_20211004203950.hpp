@@ -31,9 +31,9 @@ class BST {
         Patient leftMostValue( const Node* root );
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
-        DList inOrder(Node* root);//duyệt giữa
+        void inOrder(Node* root);//duyệt giữa
         void edit(); //sửa bệnh nhân
-        void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
+        void sort(); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
         void F(); //thống kê các F (nếu có map thì dùng, k thì thoi)
         void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
@@ -51,11 +51,11 @@ bool BST::existPatient(Node* root, string id){ //duyệt trước
     return false;
 }
 bool BST::validInfection(Node* root, string infection){ //duyệt sau
-    if(infection == "NO") return true;
     if(root != NULL){
-        validInfection(root->left,infection);
+        validInfection(root->left,,infection);
         validInfection(root->right,infection);
-        if(infection == root->data.getId()) return true;
+        if(root->data.getId() == infection) return true;
+        if(existPatient(root->data,infection)== true || infection == 'NO') return true;
     }
     return false;
 }
@@ -108,14 +108,12 @@ Node* BST::erase(Node* root, Patient val){
     }
     return root;
 }
-DList d;
-DList BST::inOrder(Node* root){
+void BST::inOrder(Node* root){
     if(root != NULL){
         inOrder(root->left);
-        d.push(root->data);
+        printf("%d ", root->data);
         inOrder(root->right);
     }
-    return d;
 }
 Node* BST::search(Node* root, Patient val){
     if (root == NULL)
@@ -130,35 +128,20 @@ Node* BST::search(Node* root, Patient val){
         return search(root->right, val);
     }
 }
-void BST::sortByName(Node* root){
-    DList a = inOrder(root);
-    Patient temp;
-    for(DNode* p = a.getHead(); p->next != NULL; p = p->next){
-        for(DNode* q = a.getTail(); q != p; q = q->prev){
-            if(p->data.getName()>q->data.getName()){
-                temp = p->data;
-                p->data = q->data;
-                q->data = temp;
-            }
-        }
-    }
-}
 void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
     for(int i=0; i<n; i++){
-        cout<<"-->Enter infomation of Patent "<<i+1<<endl;
         Patient a;
         do{
         cin>>a;
-        if(existPatient(root,a.getId()) || !validInfection(root,a.getInfect())){
-            cout<<"Same id or invalid infection, please enter again!!"<<endl;
+        if(existPatient(root,a.getId())){
+            cout<<"Same id, enter again!!"<<endl;
         }
-        }while((existPatient(root, a.getId())) && (!validInfection(root, a.getInfect())));
+        }while(existPatient(root, a.getId()));
         root = add(root,a);
         size++;
     }
-    sortByName(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4
