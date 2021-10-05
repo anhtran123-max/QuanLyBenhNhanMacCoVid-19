@@ -167,23 +167,6 @@ void BST::sortByName(Node* root){
         }
     }
 }
-bool checkSubString(string str1, string str2){
-    if(str2.size() > str1.size()) return false;
-    for(int i = 0; i < str1.size(); i++){
-        int j = 0;
-        if(str1[i] == str2[j]){
-            int tmp = i;
-            while (str1[i] == str2[j] && j < str2.size()){
-                j++;
-                i++;
-            }
-            if (j == str2.size()) return true;
-            else i = tmp;
-        }   
-    }
-    return false;
-}
-
 void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
