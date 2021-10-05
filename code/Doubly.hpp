@@ -38,20 +38,20 @@ void DList::push(Patient val){
     DNode* p = new DNode(val);
     if(size == 0){
         head = tail = p;
-        size++;
     }
     else{
         head->prev = p;
         p->next = head;
         head = p;
-        size++;
     }
+    size++;
 }
 void DList::Delete(){
-    DNode* k = head;
-    while(k != NULL){
+    DNode* k = NULL;
+    while(head != NULL){
         k = head;
         head = head->next;
         delete k;
     } 
+    size = 0;
 }

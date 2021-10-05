@@ -2,7 +2,7 @@
 #include "Doubly.hpp"
 #include<bits/stdc++.h>
 
-class Node{
+class Node {
     public:
         Patient data;
         Node *left;
@@ -26,14 +26,12 @@ class BST {
         bool validInfection(Node* root, string infection); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
         Node* search(Node* root, Patient val);//tìm kiếm
-        bool leftOf(Patient val, Node* root );
-        bool rightOf(Patient val, Node* root );
-        Patient leftMostValue( const Node* root );
-        void Free( Node* root );
+        bool leftOf(Patient val, Node* root);
+        bool rightOf(Patient val, Node* root);
+        Patient leftMostValue(const Node* root);
+        void Free(Node* root);
         Node* erase(Node* root, Patient val);//xóa 
-        DList preOrder(Node* root);//duyệt trước
         DList inOrder(Node* root);//duyệt giữa
-        DList postOrder(Node* root);//duyệt sau
         void edit(); //sửa bệnh nhân
         void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
@@ -42,49 +40,24 @@ class BST {
         void exportPatients(); //xuất file
         void function(void); //hàm thực thi các thao tác
 };
-    DList change;
-DList BST::preOrder(Node* root){
-    if(root != NULL){
-        change.push(root);
-        existPatient(root->left);
-        existPatient(root->right);
-    }
-    return change;
-}
-DList BST::inOrder(Node* root){
-    if(root != NULL){
-        inOrder(root->left);
-        change.push(root->data);
-        inOrder(root->right);
-    }
-    return change;
-}
-DList BST::postOrder(Node* root){
-    if(root != NULL){
-        existPatient(root->left);
-        existPatient(root->right);
-        change.push(root);
-    }
-    return change;
-}
-bool BST::existPatient(string id){ //duyệt trước
-    change.Delete();
-    DList d = preOrder(Node* root);
-    DNode* p = d.getHead();
-    while(p != NULL){
-        if(p->data.getId() == id) return true;
-        p = p->next;
+//TODO: viết 2 hàm bool
+bool BST::existPatient(Node* root, string id){ //duyệt trước
+   if(root != NULL)
+    {
+        if(root->data.getId()==id){
+            return true;
+        }
+        existPatient(root->left, id);
+        existPatient(root->right, id);
     }
     return false;
 }
-bool BST::validInfection(string infection){ //duyệt sau
+bool BST::validInfection(Node* root, string infection){ //duyệt sau
     if(infection == "NO") return true;
-    change.Delete();
-    DList d = postOrder(Node* root);
-    DNode* p = d.getHead();
-    while(p != NULL){
-        if(p->data.getId() == infection) return true;
-        p = p->next;
+    if(root != NULL){
+        validInfection(root->left,infection);
+        validInfection(root->right,infection);
+        if(root->data.getId() == infection) return true;
     }
     return false;
 }
@@ -97,19 +70,23 @@ Node* BST::add(Node* root, Patient val){
         root->right = add(root->right, val);
     return root;
 }
-bool BST::leftOf(Patient val, Node* root ){
+bool BST::leftOf(Patient val, Node* root)
+{
     return val.getId() < root->data.getId(); 
 }
-bool BST::rightOf(Patient val, Node* root ){
+ 
+bool BST::rightOf(Patient val, Node* root )
+{
     return val.getId() > root->data.getId(); 
 }
-Patient BST::leftMostValue( const Node* root ){
-    while(root->left != NULL)
+Patient BST::leftMostValue(const Node* root){
+    while (root->left != NULL)
         root = root->left;
     return root->data;
 }
-void BST::Free( Node* root ){
-    if(root){
+void BST::Free(Node* root)
+{
+    if (root){
         Free(root->left);
         Free(root->right);
         delete root;
@@ -127,7 +104,8 @@ Node* BST::erase(Node* root, Patient val){
             free(root);
             return newRoot;
         }
-        if(root->right == NULL){
+        if (root->right == NULL)
+        {
             Node* newRoot = root->left;
             free(root);
             return newRoot;
@@ -137,21 +115,27 @@ Node* BST::erase(Node* root, Patient val){
     }
     return root;
 }
+DList d;
+DList BST::inOrder(Node* root){
+    if(root != NULL){
+        inOrder(root->left);
+        d.push(root->data);
+        inOrder(root->right);
+    }
+    return d;
+}
 Node* BST::search(Node* root, Patient val){
     if (root == NULL)
         return NULL;
     if(root->data.getId() == val.getId()){
         return root;
-    }
-    else if (leftOf(val, root)){
+    }else if (leftOf(val, root)){
         return search(root->left, val);
-    }
-    else if(rightOf(val, root)){
+    }else if(rightOf(val, root)){
         return search(root->right, val);
     }
 }
 void BST::sortByName(Node* root){
-    change.Delete();
     DList a = inOrder(root);
     Patient temp;
     for(DNode* p = a.getHead(); p->next != NULL; p = p->next){
@@ -172,13 +156,13 @@ void BST::function(void){
         Patient a;
         do{
         cin>>a;
-        if(existPatient(a.getId())){
+        if(existPatient(root,a.getId())){
             cout<<"Same id, enter again!!"<<endl;
         }
-        if(!validInfection(a.getInfect())){
-            cout<<"Invalid infection!!"<<endl;
+        if(!validInfection(root,a.getInfect())){
+            cout<<"Invalid Infection!!"<<endl;
         }
-        }while((existPatient(a.getId())) && (!validInfection(a.getInfect())));
+        }while(existPatient(root, a.getId()) || !validInfection(root, a.getInfect()));
         root = add(root,a);
         size++;
     }
