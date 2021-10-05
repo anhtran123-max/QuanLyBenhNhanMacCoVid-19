@@ -26,6 +26,7 @@ class DList{
         DNode* getHead();
         DNode* getTail();
         void push(Patient val);
+        void Delete();
 };
 DNode* DList::getHead(){
     return head;
@@ -45,4 +46,12 @@ void DList::push(Patient val){
         head = p;
         size++;
     }
+}
+void DList::Delete(){
+    DNode* k = head;
+    while(k != NULL){
+        k = head;
+        head = head->next;
+        delete k;
+    } 
 }
