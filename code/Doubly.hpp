@@ -27,6 +27,7 @@ class DList{
         DNode* getTail();
         void push(Patient val);
         void Delete();
+        void SortByName();
         void print();
 };
 DNode* DList::getHead(){
@@ -55,6 +56,18 @@ void DList::Delete(){
         delete k;
     } 
     size = 0;
+}
+void DList::SortByName(){
+    Patient temp;
+    for(DNode* p = head; p->next != NULL; p = p->next){
+        for(DNode* q = tail; q != p; q = q->prev){
+            if(p->data.getName()>q->data.getName()){
+                temp = p->data;
+                p->data = q->data;
+                q->data = temp;
+            }
+        }
+    }
 }
 void DList::print(){
     DNode* d = head;

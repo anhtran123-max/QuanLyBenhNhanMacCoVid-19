@@ -34,7 +34,7 @@ class BST {
         DList preOrder(Node* root);//duyệt trước
         DList inOrder(Node* root);//duyệt giữa
         DList postOrder(Node* root);//duyệt sau
-        void edit(); //sửa bệnh nhân
+        void edit(Node* root); //sửa bệnh nhân
         void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
         void F(); //thống kê các F (nếu có map thì dùng, k thì thoi)
@@ -117,11 +117,12 @@ Patient BST::leftMostValue( const Node* root ){
     return root->data;
 }
 void BST::Free( Node* root ){
-    if(root){
-        Free(root->left);
-        Free(root->right);
-        delete root;
-    }
+    if(root== NULL) return;
+
+    Free(root->left);
+    Free(root->right);
+    delete root;
+    size = 0;
 }
 
 Node* BST::erase(Node* root, Patient val){
@@ -164,19 +165,35 @@ Node* BST::search(Node* root, Patient val){
 void BST::sortByName(Node* root){
     change.Delete();
     DList a = inOrder(root);
-    Patient temp;
-    for(DNode* p = a.getHead(); p->next != NULL; p = p->next){
-        for(DNode* q = a.getTail(); q != p; q = q->prev){
-            if(p->data.getName()>q->data.getName()){
-                temp = p->data;
-                p->data = q->data;
-                q->data = temp;
-            }
-        }
-    }
+    a.SortByName();
     a.print();
 }
 
+void BST::edit(Node* root){
+    Patient find;
+    string id_fix;
+    cout<<"Enter id of patient need to edit: ";
+    cin>>id_fix;
+    find.setId(id_fix);
+    if(search(root, find)==NULL){
+        cout<<"No such patient has been found !!"<<endl;
+        return;
+    }else{
+        erase(root,find);
+        size--;
+        do{
+            cin>>find;
+            if(existPatient(find.getId())){
+                cout<<"Same id, enter again!!"<<endl;
+            }
+            if(!validInfection(find.getInfect())){
+                cout<<"Invalid infection!!"<<endl;
+            }
+        }while((existPatient(find.getId())) || (!validInfection(find.getInfect())));
+        root = add(root,find);
+    }
+    cout<<"Edit success!"<<endl;
+}
 void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
@@ -195,7 +212,7 @@ void BST::function(void){
         root = add(root,a);
         size++;
     }
-    sortByName(root);
+    edit(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4

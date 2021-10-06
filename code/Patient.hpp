@@ -31,13 +31,13 @@ class Patient:public Datetime {
             this->place = place;
             this->q_day = q_day;
         }
-        void setId();
-        void setName();
-        void setAddress();
-        void setStatus();
-        void setInfect();
-        void setPlace();
-        void setQ_day();
+        void setId(string id);
+        void setName(string name);
+        void setAddress(string address);
+        void setStatus(int status);
+        void setInfect(string infection);
+        void setPlace(string place);
+        void setQ_day(int q_day);
         string getId();
         string getName();
         string getAddress();
@@ -64,25 +64,25 @@ bool timeTest(int day, int month, int year){
     }
     return false;
 }
-void Patient::setId(){
+void Patient::setId(string id){
     this->id=id;
 }
-void Patient::setName(){
+void Patient::setName(string name){
     this->name=name;
 }
-void Patient::setAddress(){
+void Patient::setAddress(string address){
     this->address=address;
 }
-void Patient::setStatus(){
+void Patient::setStatus(int status){
     this->status=status;
 }
-void Patient::setInfect(){
+void Patient::setInfect(string infection){
     this->infection=infection;
 }
-void Patient::setPlace(){
+void Patient::setPlace(string place){
     this->place=place;
 }
-void Patient::setQ_day(){
+void Patient::setQ_day(int q_day){
     this->q_day=q_day;
 }
 string Patient::getId(){
