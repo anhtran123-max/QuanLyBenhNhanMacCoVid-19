@@ -205,6 +205,7 @@ void sort(int a[], int b[]){
             }
         }
     }
+
 }
 void BST::F(Node* root){
     change.Delete();
