@@ -25,7 +25,9 @@ class DList{
         ~DList(){}
         DNode* getHead();
         DNode* getTail();
+        void setSize(int size);
         void push(Patient val);
+        void Add(Patient val);
         void Delete();
         void SortByName();
         void print();
@@ -36,7 +38,10 @@ DNode* DList::getHead(){
 DNode* DList::getTail(){
     return tail;
 }
-void DList::push(Patient val){
+void DList::setSize(int size){
+    this->size = size;
+}
+void DList::push(Patient val){//thêm đầu
     DNode* p = new DNode(val);
     if(size == 0){
         head = tail = p;
@@ -48,6 +53,17 @@ void DList::push(Patient val){
     }
     size++;
 }
+void DList::Add(Patient val){//thêm cuối
+    DNode* p = new DNode(val);
+    if(size == 0) {
+        head = tail = p;
+    }else{
+        tail->next = p;
+        p->prev = tail;
+        tail = p;
+    }
+    size++;
+}
 void DList::Delete(){
     DNode* k = NULL;
     while(head != NULL){
@@ -55,7 +71,7 @@ void DList::Delete(){
         head = head->next;
         delete k;
     } 
-    size = 0;
+    setSize(0);
 }
 void DList::SortByName(){
     Patient temp;

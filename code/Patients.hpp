@@ -37,7 +37,7 @@ class BST {
         void edit(Node* root); //sửa bệnh nhân
         void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
         void statistics(); //thống kê theo nơi điều trị
-        void F(); //thống kê các F (nếu có map thì dùng, k thì thoi)
+        void F(Node* root); //thống kê các F (nếu có map thì dùng, k thì thoi)
         void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
         void exportPatients(); //xuất file
         void function(void); //hàm thực thi các thao tác
@@ -45,7 +45,7 @@ class BST {
 DList change;
 DList BST::preOrder(Node* root){
     if(root != NULL){
-        change.push(root->data);
+        change.Add(root->data);
         preOrder(root->left);
         preOrder(root->right);
     }
@@ -194,6 +194,38 @@ void BST::edit(Node* root){
     }
     cout<<"Edit success!"<<endl;
 }
+void BST::F(Node* root){
+    change.Delete();
+    DList d = preOrder(root);
+    int arr[size];
+    int i = 0;
+    DNode* p = d.getHead();
+    while(p != NULL && i<size){
+        if(p->data.getInfect() == "NO"){
+        arr[i] = 0;
+        }else{
+            int j = 0;
+            DNode* q = d.getHead();
+            while(q != p && j<i){
+                if(p->data.getInfect() == q->data.getId()){
+                    arr[i] = arr[j] + 1;
+                    break;
+                }
+                j++;
+                q = q->next;
+            }
+        }
+        i++;
+        p = p->next;
+    }
+    i = 0;
+    p = d.getHead();
+    while(p!=NULL && i<size){
+        cout<<"Id: "<<p->data.getId()<<" is F"<<arr[i]<<endl;
+        i++;
+        p = p->next;
+    }
+}
 void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
@@ -212,7 +244,8 @@ void BST::function(void){
         root = add(root,a);
         size++;
     }
-    edit(root);
+    //edit(root);
+    F(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4
