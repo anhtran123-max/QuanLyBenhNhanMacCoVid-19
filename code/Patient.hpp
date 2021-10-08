@@ -46,7 +46,7 @@ class Patient:public Datetime {
         string getPlace();
         int getQ_day();
         friend istream& operator>>(istream &input, Patient &patient); // nhap
-        friend ostream& operator<<(ostream &ouput, Patient patient); //xuat
+        friend ostream& operator<<(ostream &ouput, Patient patient); //xuat (Minh design)TODO:
 };
 bool timeTest(int day, int month, int year){
     if (year<0 || month<0 || month> 12 || day<0 || day> 31) return false;

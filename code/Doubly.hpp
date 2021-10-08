@@ -25,6 +25,7 @@ class DList{
         ~DList(){}
         DNode* getHead();
         DNode* getTail();
+        int getSize();
         void setSize(int size);
         DNode* CreateNode(Patient val);
         void push(Patient val);
@@ -40,21 +41,24 @@ DNode* DList::getHead(){
 DNode* DList::getTail(){
     return tail;
 }
+int DList::getSize(){
+    return size;
+}
 void DList::setSize(int size){
     this->size = size;
 }
-DNode* DList::CreateNode(Patient val){
-    DNode *pDNode=new DNode;
-    if(pDNode != NULL){
-        pDNode->data=d;
-        pDNode->next=NULL;
-        pDNode->prev=NULL;
-    }
-    else cout<<" cap phat bo nho that bai";
-    return pDNode;
-}
+// DNode* DList::CreateNode(Patient val){
+//     DNode *pDNode=new DNode;
+//     if(pDNode != NULL){
+//         pDNode->data=d;
+//         pDNode->next=NULL;
+//         pDNode->prev=NULL;
+//     }
+//     else cout<<" cap phat bo nho that bai";
+//     return pDNode;
+// }
 void DList::push(Patient val){//thêm đầu
-    DNode* p = CreateNode(val);
+    DNode* p = new DNode(val);
     if(size == 0){
         head = tail = p;
     }
@@ -66,7 +70,7 @@ void DList::push(Patient val){//thêm đầu
     size++;
 }
 void DList::Add(Patient val){//thêm cuối
-    DNode* p = CreateNode(val);
+    DNode* p = new DNode(val);
     if(size == 0) {
         head = tail = p;
     }else{
@@ -97,18 +101,18 @@ void DList::SortByName(){
         }
     }
 }
-void DList::sortList(){
-    for(DNode *p = head;p!=NULL;p->next){
-        for(DNode *p2 = p->next;p2!=NULL;p2->next){
-            if(p->data > p2->data){
-                DNode *tmp;
-                tmp = p->data;
-                p->data=p2->data;
-                p2->data=tmp;
-            }
-        }
-    }
-}
+// void DList::sortList(){
+//     for(DNode *p = head;p!=NULL;p->next){
+//         for(DNode *p2 = p->next;p2!=NULL;p2->next){
+//             if(p->data > p2->data){
+//                 DNode *tmp;
+//                 tmp = p->data;
+//                 p->data=p2->data;
+//                 p2->data=tmp;
+//             }
+//         }
+//     }
+// }
 void DList::print(){
     DNode* d = head;
     while(d != NULL){
