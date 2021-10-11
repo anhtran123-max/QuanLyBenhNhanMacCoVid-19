@@ -35,12 +35,13 @@ class BST {
         DList inOrder(Node* root);//duyệt giữa
         DList postOrder(Node* root);//duyệt sau
         void edit(Node* root); //sửa bệnh nhân
-        void sortByName(Node* root); //dùng hàm sort có sẵn kết hợp thêm 1 class Compare để so sánh và sắp xếp
-        void statistics(); //thống kê theo nơi điều trị
-        void F(Node* root); //thống kê các F (nếu có map thì dùng, k thì thoi)
-        void F0Status(Node* root);// thống kê F0
-        void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
-        void exportPatients(); //xuất file
+        void sortByName(Node* root); //sắp xếp theo tên
+        void statistics(); //thống kê theo nơi điều trị (Minh)TODO:
+        void F(Node* root); //thống kê các F
+        void F0Status(Node* root); // thống kê F0
+        void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày) (Minh)TODO:
+        void exportPatients(); //xuất file (Minh)TODO:
+        void display(); //xuất ra màn hình (Minh design)TODO:
         void function(void); //hàm thực thi các thao tác
 };
 DList change;
@@ -195,16 +196,29 @@ void BST::edit(Node* root){
     }
     cout<<"Edit success!"<<endl;
 }
-// t them 2 sort 1 cai ben doubly vs 1 cai cho nay nha k bt m dung cai nao thi dung kk
-void sort(int a[], int b[]){
-    for(int i=0; i<size-1; i++){
-        for(int j=i+1;j<size;j++){
-            if(a[i] > b[j]){
-                int tmp = a[i];
-                a[i] = b[j];
-                b[j] = tmp;
+void sortId(DList &d, int a[]){//hàm ngoài
+    Patient temp;
+    int k;
+    int i = 0;
+    DNode* p = d.getHead();
+    while(p->next != NULL && i<d.getSize()-1){
+        int j = i+1;
+        DNode* q = p->next;
+        while(q != NULL && j<d.getSize()){
+            if(a[i]>a[j]){
+                temp = p->data;
+                p->data = q->data;
+                q->data = temp;
+
+                k = a[i];
+                a[i] = a[j];
+                a[j] = k;
             }
+            q = q->next;
+            j++;
         }
+        p = p->next;
+        i++;
     }
 }
 void BST::F(Node* root){
@@ -231,6 +245,7 @@ void BST::F(Node* root){
         i++;
         p = p->next;
     }
+    sortId(d,arr);
     i = 0;
     p = d.getHead();
     while(p!=NULL && i<size){
