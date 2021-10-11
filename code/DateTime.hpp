@@ -10,6 +10,7 @@ class Datetime{
         Datetime();
         ~Datetime(){}
         Datetime(int day, int month, int year);
+        Datetime(const Datetime& other);
         void setDay(int day);
         void setMonth(int month);
         void setYear(int year);
@@ -26,6 +27,11 @@ Datetime::Datetime(int day, int month, int year){
     this->day = day;
     this->month = month;
     this->year = year;
+}
+Datetime::Datetime(const Datetime& other){
+    this->day = other.day;
+    this->month = other.month;
+    this->year = other.year;
 }
 void Datetime::setDay(int day) {
     this->day = day;

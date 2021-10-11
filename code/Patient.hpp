@@ -31,6 +31,15 @@ class Patient:public Datetime {
             this->place = place;
             this->q_day = q_day;
         }
+        Patient(const Patient &other):Datetime(other){
+            this->id = other.id;
+            this->name = other.name;
+            this->address = other.address;
+            this->status = other.status;
+            this->infection = other.infection;
+            this->place = other.place;
+            this->q_day = other.q_day;
+        }
         void setId(string id);
         void setName(string name);
         void setAddress(string address);
@@ -65,8 +74,7 @@ bool timeTest(int day, int month, int year){
     return false;
 }
 bool checkStatus(int status){
-    if(status == 0 || status == 1 || status == 2) return true;
-    return false;
+    return (status == 0 || status == 1 || status == 2);
 }
 void Patient::setId(string id){
     this->id=id;
@@ -134,12 +142,13 @@ istream& operator>>(istream &input, Patient &patient){
     fflush(stdin);
     getline(input,patient.address);
     do{
-        cout<<"NOTE - input status: healthy=0, lightly=1, heavily =2";
+        cout<<"NOTE - input status: healthy=0, lightly=1, heavily =2"<<endl;
         cout<<"Status: ";
         fflush(stdin);
         input>>patient.status;
-        if(!checkStatus(status)) cout<<"Error, enter again!"<<endl;
-    }while(!checkStatus(status));
+        if(!checkStatus(patient.status)) cout<<"Error, enter again!"<<endl;
+    }while(!checkStatus(patient.status));
+    cout<<"NOTE - input infection: 'NO' or id of before patients"<<endl;
     cout<<"Infection: ";
     input>>patient.infection;
     cout<<"Quarantine place: ";
@@ -153,4 +162,5 @@ istream& operator>>(istream &input, Patient &patient){
 ostream& operator<<(ostream& output, Patient patient){
     output<<"Id: "<<patient.id<<", Name: "<<patient.name<<" ("<<patient.getDay()<<","<<patient.getMonth()<<","<<patient.getYear()<<")"<<", Address: "<<patient.address<<endl;
     output<<"Status: "<<patient.status<<", Infection: "<<patient.infection<<", Quarantine place: "<<patient.place<<", Day need to quarantine: "<<patient.q_day<<endl;
+    return output;
 }

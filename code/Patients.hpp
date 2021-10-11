@@ -256,13 +256,26 @@ void BST::F(Node* root){
 }
 void BST::F0Status(Node* root){
     change.Delete();
-    DList d = preOrder(root);
-    DNode* p = d.getHead();
-    while(p != NULL ){
-        if(p->data.getStatus() == 0) cout<<"Id: "<<p->data.getId()<<"is FO"<<endl;
-        p=p->next;
+    DList d = inOrder(root);
+    DNode* p = d.getTail();
+    cout<<"---Status of F0 patient---"<<endl;
+    while(p != NULL){
+        if(p->data.getInfect() == "NO"){
+            cout<<p->data.getId()<<": ";
+            switch(p->data.getStatus()){
+                case 0:
+                cout<<"Healthy"<<endl;
+                break;
+                case 1:
+                cout<<"Lightly"<<endl;
+                break;
+                default:
+                cout<<"Heavily"<<endl;
+                break;
+            }
+        }
+        p = p->prev;
     }
-        
 }
 void BST::function(void){
     int n;
@@ -284,6 +297,8 @@ void BST::function(void){
     }
     //edit(root);
     F(root);
+    F0Status(root);
+    sortByName(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4
