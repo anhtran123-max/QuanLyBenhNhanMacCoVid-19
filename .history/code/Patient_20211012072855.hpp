@@ -1,37 +1,55 @@
 #pragma once
-#include "Person.hpp"
+#include "DateTime.hpp"
 #include <bits/stdc++.h>
 using namespace std;
-class Patient:public Person {
+class Patient:public Datetime {
     private:
+        string id;
+        string name;
+        string address;
         int status;//tinh trang: 0 neu khoe, 1 neu dang benh
         string infection; //nguon lay "NO" la F0 hoac id cua nguoi trươc do
         string place; //noi cach ly
         int q_day; // so ngay cach ly
     public:
-        Patient(): Person(){
+        Patient(): Datetime(){
+            this->id = "";
+            this->name = "";
+            this->address = "";
             this->status = 0;
             this->infection = "NO";
             this->place = "";
             this->q_day = 0;
         }
         ~Patient(){}
-        Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): Person(id, name, address, day, month, year){
+        Patient(string id, string  name, int day, int month, int year, string address, int status, string infection, string place, int q_day): Datetime(day, month, year){
+            this->id = id;
+            this->name = name;
+            this->address = address;
             this->status = status;
             this->infection = infection;
             this->place = place;
             this->q_day = q_day;
         }
-        Patient(const Patient &other):Person(other){
+        Patient(const Patient &other):Datetime(other){
+            this->id = other.id;
+            this->name = other.name;
+            this->address = other.address;
             this->status = other.status;
             this->infection = other.infection;
             this->place = other.place;
             this->q_day = other.q_day;
         }
+        void setId(string id);
+        void setName(string name);
+        void setAddress(string address);
         void setStatus(int status);
         void setInfect(string infection);
         void setPlace(string place);
         void setQ_day(int q_day);
+        string getId();
+        string getName();
+        string getAddress();
         int getStatus();
         string getInfect();
         string getPlace();
@@ -58,6 +76,15 @@ bool timeTest(int day, int month, int year){
 bool checkStatus(int status){
     return (status == 0 || status == 1 || status == 2);
 }
+void Patient::setId(string id){
+    this->id=id;
+}
+void Patient::setName(string name){
+    this->name=name;
+}
+void Patient::setAddress(string address){
+    this->address=address;
+}
 void Patient::setStatus(int status){
     this->status=status;
 }
@@ -69,6 +96,15 @@ void Patient::setPlace(string place){
 }
 void Patient::setQ_day(int q_day){
     this->q_day=q_day;
+}
+string Patient::getId(){
+    return id;
+}
+string Patient::getName(){
+    return name;
+}
+string Patient::getAddress(){
+    return address;
 }
 int Patient::getStatus(){
     return status;
@@ -84,14 +120,11 @@ int Patient::getQ_day(){
 }
 istream& operator>>(istream &input, Patient &patient){
     int day, month, year;
-    string id, name, address;
     cout<<"id: ";
-    input>>id;
-    patient.setId(id);
+    input>>patient.id;
     cout<<"Name: ";
     fflush(stdin);
-    getline(input,name);
-    patient.setName(name);
+    getline(input,patient.name);
     cout<<"-Birthday: "<<endl;
     do{
         cout<<"Day: ";
@@ -107,8 +140,7 @@ istream& operator>>(istream &input, Patient &patient){
     patient.setYear(year);
     cout<<"Address: ";
     fflush(stdin);
-    getline(input,address);
-    patient.setAddress(address);
+    getline(input,patient.address);
     do{
         cout<<"NOTE - input status: healthy=0, lightly=1, heavily =2"<<endl;
         cout<<"Status: ";
@@ -128,7 +160,7 @@ istream& operator>>(istream &input, Patient &patient){
     return input;
 }
 ostream& operator<<(ostream& output, Patient patient){
-    output<<"Id: "<<patient.getId()<<", Name: "<<patient.getName()<<" ("<<patient.getDay()<<","<<patient.getMonth()<<","<<patient.getYear()<<")"<<", Address: "<<patient.getAddress()<<endl;
+    output<<"Id: "<<patient.id<<", Name: "<<patient.name<<" ("<<patient.getDay()<<","<<patient.getMonth()<<","<<patient.getYear()<<")"<<", Address: "<<patient.address<<endl;
     output<<"Status: "<<patient.status<<", Infection: "<<patient.infection<<", Quarantine place: "<<patient.place<<", Day need to quarantine: "<<patient.q_day<<endl;
     return output;
 }
