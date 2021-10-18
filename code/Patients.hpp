@@ -120,13 +120,11 @@ Patient BST::leftMostValue( const Node* root ){
 }
 void BST::Free( Node* root ){
     if(root== NULL) return;
-
     Free(root->left);
     Free(root->right);
     delete root;
     size = 0;
 }
-
 Node* BST::erase(Node* root, Patient val){
     if(root == NULL) return root;
     if(leftOf(val,root))
@@ -163,7 +161,6 @@ Node* BST::search(Node* root, Patient val){
         return search(root->right, val);
     }
 }
-
 void BST::sortByName(Node* root){
     change.Delete();
     DList a = inOrder(root);
@@ -209,7 +206,6 @@ void sortId(DList &d, int a[]){//hàm ngoài
                 temp = p->data;
                 p->data = q->data;
                 q->data = temp;
-
                 k = a[i];
                 a[i] = a[j];
                 a[j] = k;
