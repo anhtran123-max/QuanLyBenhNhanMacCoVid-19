@@ -136,12 +136,12 @@ Node* BST::erase(Node* root, Patient val){
     else {
         if(root->left ==NULL){
             Node* newRoot=root->right;
-            free(root);
+            delete root;
             return newRoot;
         }
         if(root->right == NULL){
             Node* newRoot = root->left;
-            free(root);
+            delete root;
             return newRoot;
         }
         root->data = leftMostValue(root->right);
