@@ -36,7 +36,7 @@ class BST {
         DList postOrder(Node* root);//duyệt sau
         void edit(Node* root); //sửa bệnh nhân
         void sortByName(Node* root); //sắp xếp theo tên
-        void statistics(); //thống kê theo nơi điều trị (Minh)TODO:
+        void statistics(Node *root); //thống kê theo nơi điều trị (Minh)TODO:
         void F(Node* root); //thống kê các F
         void F0Status(Node* root); // thống kê F0
         void maxQ_day(); //các bệnh nhân có số ngày cách ly lâu (>21 ngày) (Minh)TODO:
@@ -273,6 +273,25 @@ void BST::F0Status(Node* root){
         p = p->prev;
     }
 }
+// thong ke noi cach ly
+void BST::statistics(Node *root){
+    change.Delete();
+    DList d = preOrder(root);
+    DNode *p = d.getHead();
+    int count = 1;
+    while(p != NULL){
+        DNode *q = p->next;
+        while(q != NULL){
+            if(p->data.getPlace() == q->data.getPlace()){
+            count++;
+            }
+            q = q->next;
+        }
+        p = p->next;
+        cout << p->data.getPlace() << " has " << count << " people" << endl;
+        count = 1;
+    }
+}
 void BST::function(void){
     int n;
     cout<<"Enter amount of patients: "; cin>>n;
@@ -295,6 +314,8 @@ void BST::function(void){
     F(root);
     F0Status(root);
     sortByName(root);
+    cout << "\nThe number of patients in quarantine placen: \n";
+    statistics(root);
     // Patient a,b,c,d,e,f,g;
     // cin>>a>>b>>c>>d>>e>>f>>g;
     // root = add(root,a); //id = 4
