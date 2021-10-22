@@ -1,0 +1,4 @@
+STT.1	11	Name: MINH (1/1/1)	Address: Q9
+Status: 0	Infect: NO	Place: Q9	Q_day: 22
+STT.2	22	Name: ANH (2/2/2)	Address: Q9
+Status: 2	Infect: NO	Place: Q9	Q_day: 21

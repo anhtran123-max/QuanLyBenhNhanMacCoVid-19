@@ -119,6 +119,7 @@ istream& operator>>(istream &input, Patient &patient){
     cout<<"NOTE - input infection: 'NO' or id of before patients"<<endl;
     cout<<"Infection: ";
     input>>patient.infection;
+    cout<<"NOTE - input quarantine place: 1.TK-PLAZA, 2.TD, 3.Q9"<<endl;
     cout<<"Quarantine place: ";
     fflush(stdin);
     getline(input,patient.place);
