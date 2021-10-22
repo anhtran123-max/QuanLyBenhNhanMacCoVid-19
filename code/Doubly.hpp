@@ -47,16 +47,6 @@ int DList::getSize(){
 void DList::setSize(int size){
     this->size = size;
 }
-// DNode* DList::CreateNode(Patient val){
-//     DNode *pDNode=new DNode;
-//     if(pDNode != NULL){
-//         pDNode->data=d;
-//         pDNode->next=NULL;
-//         pDNode->prev=NULL;
-//     }
-//     else cout<<" cap phat bo nho that bai";
-//     return pDNode;
-// }
 void DList::push(Patient val){//thêm đầu
     DNode* p = new DNode(val);
     if(size == 0){
@@ -101,18 +91,6 @@ void DList::SortByName(){
         }
     }
 }
-// void DList::sortList(){
-//     for(DNode *p = head;p!=NULL;p->next){
-//         for(DNode *p2 = p->next;p2!=NULL;p2->next){
-//             if(p->data > p2->data){
-//                 DNode *tmp;
-//                 tmp = p->data;
-//                 p->data=p2->data;
-//                 p2->data=tmp;
-//             }
-//         }
-//     }
-// }
 void DList::print(){
     DNode* d = head;
     while(d != NULL){

@@ -26,6 +26,7 @@ class Person{
         int getDay();
         int getMonth();
         int getYear();
+        friend istream& operator>>(istream& input, Person &person);
 };
 Person::Person(){
     this->id = "";
@@ -44,12 +45,7 @@ Person::Person(string id, string name, string address, int day, int month, int y
     this->year = year;
 }
 Person::Person(const Person& other){
-    this->id = other.id;
-    this->name = other.name;
-    this->address = other.address;
-    this->day = other.day;
-    this->month = other.month;
-    this->year = other.year;
+    *this = other;
 }
 void Person::setId(string id){
     this->id = id;
@@ -86,4 +82,41 @@ int Person::getMonth(){
 }
 int Person::getYear(){
     return year;
+}
+bool timeTest(int day, int month, int year){//hàm ngoài
+    if (year<0 || month<0 || month> 12 || day<0 || day> 31) return false;
+    if(month==1 || month ==3 || month == 5 || month ==7 || month ==8 || month ==10 || month==12){
+        if(day <= 31) return true;
+    }
+    if(month==4 || month ==6 || month == 9 || month ==11){
+        if(day <= 30) return true;
+    }  
+    if(year %4 ==0 && year !=0){
+        if(day <= 29) return true;
+    }  
+    else{
+        if(day <= 28) return true;
+    }
+    return false;
+}
+istream& operator>>(istream &input, Person& person){
+    cout<<"id: ";
+    input>>person.id;
+    cout<<"Name: ";
+    fflush(stdin);
+    getline(input,person.name);
+    cout<<"-Birthday: "<<endl;
+    do{
+        cout<<"Day: ";
+        input>>person.day;
+        cout<<"Month: ";
+        input>>person.month;
+        cout<<"Year: ";
+        input>>person.year;
+        if(!timeTest(person.day, person.month, person.year)) cout<<"Error, enter again!"<<endl;
+    }while(!timeTest(person.day, person.month, person.year));
+    cout<<"Address: ";
+    fflush(stdin);
+    getline(input, person.address);
+    return input;
 }

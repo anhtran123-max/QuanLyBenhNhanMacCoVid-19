@@ -1,7 +1,6 @@
 #include "Patient.hpp"
 #include "Doubly.hpp"
 #include<bits/stdc++.h>
-#include <stdio.h>
 class Node{
     public:
         Patient data;
@@ -28,21 +27,25 @@ class BST {
         Node* search(Node* root, Patient val);//tìm kiếm
         bool leftOf(Patient val, Node* root );
         bool rightOf(Patient val, Node* root );
-        Patient leftMostValue( const Node* root );
+        Patient leftMostValue(const Node* root);
         void Free( Node* root );
         Node* erase(Node* root, Patient val);//xóa 
         DList preOrder(Node* root);//duyệt trước
         DList inOrder(Node* root);//duyệt giữa
         DList postOrder(Node* root);//duyệt sau
         void edit(Node* root); //sửa bệnh nhân
+        void add(Node* root);//thêm bệnh nhân TODO:
+        void remove(Node* root);//xóa bệnh nhân TODO:
+        void find(Node* root);//tìm kiếm bệnh nhân TODO:
         void sortByName(Node* root); //sắp xếp theo tên
         int countPlace(Node *root, string q_place);
         void statistics(Node *root); //thống kê theo nơi điều trị
         void F(Node* root); //thống kê các F
         void F0Status(Node* root); // thống kê F0
         void maxQ_day(Node *root); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
+        void checkHealth(Node *root); //thống kê sức khỏe bệnh nhân TODO:
         void exportPatients(ofstream &file, Node *root); //xuất file
-        void display(); //xuất ra màn hình (Minh design)TODO:
+        void display(); //xuất ra màn hình TODO:
         void function(void); //hàm thực thi các thao tác
 };
 DList change;
@@ -330,22 +333,15 @@ void BST::maxQ_day(Node *root){
     int count = 0;
     DList d = preOrder(root);
     DNode *p = d.getHead();
+    p = d.getHead();
     while(p != NULL){
         if(p->data.getQ_day() > 21){
+            cout<<p->data;
             count++;
         }
         p = p->next;
     }
-    cout << "The number of people have quarantine day > 21: " << count <<endl;
-    p = d.getHead();
-    while(p != NULL){
-        if(p->data.getQ_day() > 21){
-            cout << "ID: " << p->data.getId() << "\t" << "Name: " <<p->data.getName()
-            << "\t" <<"Infected: " << p->data.getInfect() << "\t" <<"Status: "
-            << p->data.getStatus() << endl;
-        }
-        p = p->next;
-    }
+    cout << "-->The number of people have quarantine day > 21: " << count <<endl;
 }
 void BST::exportPatients(ofstream &file, Node *root){
     change.Delete();
@@ -353,13 +349,11 @@ void BST::exportPatients(ofstream &file, Node *root){
     DNode *p = d.getHead();
     int count = 1;
     while(p != NULL){
-        file << "STT."<<count << "\t" << p->data.getId() << "\t" << "Name: " <<p->data.getName() << " " <<"(" <<
-        p->data.getDay() <<"/"<<p->data.getMonth() << "/" <<p->data.getYear() << ")" << "\t" << "Address: " <<p->data.getAddress() << "\n" <<
-        "Status: " <<p->data.getStatus() << "\t" << "Infect: " <<p->data.getInfect() << "\t" << "Place: " << p->data.getPlace() << "\t" << "Q_day: "
-        << p->data.getQ_day() << endl; 
+        file<<"STT: "<<count<<" ";
+        file<<p->data<<endl;
         count++;
         p = p->next;
-        }
+    }
     file.close();
 }
 void BST::function(void){
@@ -382,9 +376,9 @@ void BST::function(void){
         size++;
     }
     //edit(root);
-    F(root);
-    F0Status(root);
-    sortByName(root);
+    //F(root);
+    //F0Status(root);
+    //sortByName(root);
     cout << "\nThe number of patients in quarantine place: \n";
     statistics(root);
     maxQ_day(root);
