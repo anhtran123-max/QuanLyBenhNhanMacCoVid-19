@@ -1,0 +1,407 @@
+CLASS
+1. Cơ bản về Class
+Các class C ++ là một công cụ để tạo các kiểu dữ liệu mới có thể được sử dụng thuận tiện như các kiểu dữ liệu tích hợp sẵn.
+Dưới đây là một bản tóm tắt ngắn gọn về class:
+•	Một lớp là một kiểu dữ liệu do người dùng định nghĩa.
+•	Một lớp bao gồm một tập hợp các thành viên. Các loại thành viên phổ biến nhất là thành phần dữ liệu và hàm thành viên.
+•	Các hàm thành viên có thể xác định ý nghĩa của việc khởi tạo (tạo), sao chép, di chuyển và dọn dẹp ( tiêu hủy)
+•	Các thành viên được truy cập bằng cách sử dụng (dấu chấm) cho các đối tượng và > (mũi tên) cho con trỏ.
+•	Các toán tử chẳng hạn như +,!, Và [], có thể được định nghĩa cho một lớp.
+•	Một lớp là một không gian chứa các thành viên của nó.
+•	Các thành phần công khai cung cấp giao diện của lớp và các thành phần riêng cung cấp chi tiết triển khai.
+•	Một cấu trúc là một lớp mà các thành viên được mặc định là công khai.
+2. Lớp và cấu trúc
+Khởi tạo class X {...}; được gọi là định nghĩa lớp; nó xác định 1 kiểu gọi là X. Ngày xưa, định nghĩa lớp thường được gọi là khai báo lớp. Khai báo thì cũng không có định nghĩa, định nghĩa lớp có thể được sao chép trong các tệp nguồn khác nhau sử dụng  #include mà không vi phạm quy tắc 1 định nghĩa. Theo định nghĩa, một cấu trúc là một lớp trong đó các thành viên được mặc định là public. Ví dụ:
+struct S {/ * ... * /}; chỉ đơn giản là viết tắt của class S {public: / * ... * /};
+Hai định nghĩa này của S có thể thay thế cho nhau, mặc dù thông thường bạn nên theo một kiểu nhất định. Phong cách bạn sử dụng tùy thuộc vào hoàn cảnh và sở thích. Tôi có xu hướng sử dụng cấu trúc cho các lớp mà tôi nghĩ là "" chỉ là cấu trúc dữ liệu đơn giản. "" Nếu tôi nghĩ về một lớp là "" một loại thích hợp với một bất biến, "tôi sử dụng
+lớp. Các hàm tạo và hàm truy cập có thể khá hữu ích ngay cả đối với các cấu trúc, nhưng như một cách viết tắt chứ không phải là bảo đảm bất biến. Theo mặc định, các thành viên của một lớp là riêng tư.
+Không bắt buộc phải khai báo dữ liệu đầu tiên trong một lớp. Trên thực tế, việc đặt các thành phần dữ liệu cuối cùng thường  nhấn mạnh các chức năng cung cấp giao diện người dùng công khai. Các chỉ định truy cập có thể được sử dụng nhiều lần trong một khai báo lớp duy nhất. 
+2.1 Hàm thành viên
+Xem xét việc triển khai khái niệm ngày bằng cách sử dụng struct để xác định biểu diễn của Date và một tập hợp các hàm để thao tác với các biến kiểu này:
+ struct Date{
+          int d,m,y;
+};
+void init_date(Date& d,int,int,int); //hàm khởi tạo
+void add_year(Date& d,int n); // hàm thêm n năm vào d
+Không có kết nối rõ ràng nào giữa kiểu dữ liệu, Date và các hàm này. Một kết nối kiểu này có thể được thiết lập bằng cách khai báo các chức năng là thành viên:
+struct Date{
+          int d,m,y;
+void init_date(Date& d,int,int,int); //hàm khởi tạo
+void add_year(Date& d,int n); // hàm thêm n năm vào d
+};
+Các hàm được khai báo trong định nghĩa lớp được gọi là các hàm thành viên và chỉ có thể được gọi cho một biến cụ thể thuộc loại thích hợp bằng cách sử dụng tiêu chuẩn cú pháp để truy cập thành viên cấu trúc.
+Các cấu trúc khác nhau có thể có nhiều hàm thành viên cùng tên. chúng ta phải phân biệt tên cấu trúc khi xác định hàm thành viên
+Trong 1 hàm thành viên, tên thành viên có thể được sử dụng mà không cần có sự tham khảo rõ ràng đến đối tượng. Trong trường hợp đó, tên có thể đề cập đến thành viên đó của đối tượng mà hàm được xác định. Ví dụ Date::init() xác định cho ngày. 
+2.2 Hàm khởi tạo
+Việc sử dụng các hàm như init () để cung cấp khởi tạo cho các lớp là không phù hợp và dễ xảy ra lỗi. Bởi vì không có chỗ nào khẳng định  rằng một đối tượng phải được khởi tạo, một lập trình viên có thể quên làm như vậy - hoặc làm như vậy hai lần (thường cho kết quả tệ như nhau). Một cách tiếp cận tốt hơn là cho phép lập trình viên khai báo một hàm với mục đích rõ ràng là khởi tạo các đối tượng. Bởi vì như vậy một hàm xây dựng các giá trị của một kiểu nhất định, nó được gọi là một constructor. Một phương thức khởi tạo được công nhận khi có cùng tên với chính lớp đó.
+class Date {
+int d, m, y;
+public:
+Date(int dd, int mm, int yy); // constructor
+// ...
+};
+Khi 1 lớp có phương thức khởi tạo, tất cả các đối tượng của lớp sẽ được khởi tạo bởi  lệnh của phương thức. nếu constructor yêu cầu các đối số, các đối số này phải được cung cấp. Bằng cách cung cấp một số hàm tạo, chúng tôi có thể cung cấp nhiều cách khác nhau để khởi tạo các đối tượng của một kiểu. Ví dụ:
+class Date {
+int d, m, y;
+public:
+// ...
+Date(int, int, int); // day, month, year
+Date(int, int); // day, month, today’s year
+Date(int); // day, today’s month and year
+Date(); // default Date: today
+Date(const char∗); // date in string representation
+};
+Các hàm tạo tuân theo các quy tắc chồng giống như các hàm thông thường. Miễn là các hàm tạo có đủ khác biệt về kiểu đối số của chúng, trình biên dịch có thể chọn đúng để sử dụng:’ 
+Sự gia tăng của các hàm tạo trong ví dụ Date là điển hình. Khi thiết kế một lớp, một lập trình viên luôn bị kích thích để thêm các tính năng chỉ vì ai đó có thể muốn chúng. Nó khiến cho việc suy nghĩ nhiều hơn để quyết định cẩn thận những tính năng nào thực sự cần thiết và chỉ bao gồm những tính năng đó. Tuy vậy, suy nghĩ thêm thường dẫn đến các chương trình nhỏ hơn và dễ hiểu hơn. Một cách để giảm số lượng các hàm liên quan là sử dụng các đối số mặc định . Đối với Date, mỗi đối số có thể được cung cấp một giá trị mặc định được hiểu là '' chọn giá trị mặc định: hôm nay. ''
+Lưu ý rằng bằng cách đảm bảo khởi tạo các đối tượng đúng cách, các hàm tạo sẽ đơn giản hóa rất nhiều thực hiện các chức năng thành viên. Đã cho các hàm tạo, các hàm thành viên khác không còn để đối phó với khả năng dữ liệu chưa được khởi tạo.
+2.3 Các hàm thành viên không đổi
+Date xác định cung cấp các hàm thành viên để gán một giá trị cho Date. Rất tiếc, chúng tôi không cung cấp cách kiểm tra giá trị của Ngày. Sự cố này có thể dễ dàng được khắc phục bằng cách thêm các chức năng đọc ngày, tháng và năm
+
+Hằng số sau danh sách đối số (trống) trong khai báo hàm chỉ ra rằng các hàm này
+không sửa đổi trạng thái của Date. Đương nhiên, trình biên dịch sẽ bắt gặp những lỗi. Ví dụ:
+int Date::year() const
+{
+return ++y; // error : cố gắng thay đổi giá trị thành viên trong hàm const
+}
+Khi một hàm thành viên const được định nghĩa bên ngoài lớp của nó, thì hậu tố const là bắt buộc.
+Nói cách khác, const là một phần của kiểu Date :: day (), Date :: month () và Date :: year ().
+Một hàm thành viên const có thể được gọi cho cả các đối tượng const và không phải const, trong khi một hàm thành viên không phải const chỉ có thể được gọi cho các đối tượng không phải const. Ví dụ:
+ 2.4 [static]Thành viên
+Sự tiện lợi của giá trị mặc định cho Date được mua bằng cái giá của một vấn đề ẩn. Lớp Date trở nên phụ thuộc vào biến toàn cục Today. Lớp Date này chỉ có thể được sử dụng Today được định nghĩa và sử dụng chính xác bởi mọi đoạn mã. Đây là loại ràng buộc khiến một lớp trở nên vô nghĩa. Người dùng không hài lòng khi cố gắng sử dụng các lớp phụ thuộc ngữ cảnh như vậy và việc bảo trì trở nên lộn xộn. Có thể ‘‘ chỉ một biến toàn cục nhỏ ’’ không quá khó quản lý, nhưng kiểu đó dẫn đến mã không thể sử dụng  ngoại trừ lập trình  ban đầu của nó. nên tránh trường hợp này. chúng ta có thể thuận lợi khi  không có sự cản trở của một biến toàn cầu có thể truy cập công khai. Một biến là một phần của một lớp, không phải là một phần của đối tượng lớp đó, được gọi là một thành viên STATIC. Có  bản sao chính xác  của thành viên STATIC thay vì một bản sao cho mỗi đối tượng, như đối với các thành viên NON STATIC thông thường. Tương tự, một hàm cần quyền truy cập vào các thành viên của một lớp, nhưng không cần được gọi cho một đối tượng cụ thể, được gọi là hàm thành viên STATIC. Đây là một thiết kế  bảo toàn nghĩa của các giá trị phương thức khởi tạo mặc định cho Date mà không gặp các vấn đề bắt nguồn từ việc phụ thuộc khác
+class Date {
+int d, m, y;
+static Date default_date;
+public:
+Date(int dd =0, int mm =0, int yy =0);
+// ...
+static void set_default(int dd, int mm, int yy); // set default_date to Date(dd,mm,yy)
+};
+Bây giờ chúng ta có thể xác định hàm tạo DATE để sử dụng default_date 
+2.5 Các loại thành viên
+Các kiểu và các kiểu bí danh kiểu có thể là thành viên của một lớp. Ví dụ:
+template<typename T>
+Một lớp thành viên (thường được gọi là lớp lồng nhau) có thể tham chiếu đến các kiểu và các thành viên static của lớp bao quanh nó. Nó chỉ có thể tham chiếu đến các thành viên non static khi nó được cung cấp một đối tượng của lớp bao quanh để tham chiếu đến.
+Các lớp thành viên là một sự tiện lợi về mặt ký hiệu hơn là một tính năng có tầm quan trọng cơ bản. Mặt khác, bí danh thành viên rất quan trọng như là cơ sở của kỹ thuật lập trình chung dựa trên các kiểu liên kết. Enum thành viên thường là một sự thay thế cho các lớp enum. 
+2.6 Nạp chồng toán tử
+bool operator!=(Date, Date); // toán tử khác
+bool operator<(Date, Date); // toán tử bé hơn
+bool operator>(Date, Date); // toán tử lớn hơn
+// ...
+Date& operator++(Date& d) { return d.add_day(1); } // toán tử tăng Date lên 1 ngày
+Date& operator−−(Date& d) { return d.add_day(−1); } // toán tử giảm Date xuống 1 ngày
+Date& operator+=(Date& d, int n) { return d.add_day(n); } // cộng thêm n ngày
+Date& operator−=(Date& d, int n) { return d.add_day(−n); } // trừ n ngày
+Date operator+(Date d, int n) { return d+=n; } // cộng n ngày
+Date operator−(Date d, int n) { return d+=n; } // trừ n ngày
+ostream& operator<<(ostream&, Date d); // output
+istream& operator>>(istream&, Date& d); // input
+Các toán tử này được định nghĩa để tránh quá tải và hưởng lợi từ tra cứu phụ thuộc vào đối số. Đối với Date, những toán tử này có thể được coi là những tiện ích đơn thuần. Tuy nhiên, đối với nhiều loại - chẳng hạn như số phức, vectơ, và các đối tượng giống hàm - việc sử dụng các toán tử thông thường khiến mọi người  cho rằng định nghĩa của họ gần như là bắt buộc. Đối với Date, tôi đã muốn cung cấp + = và - = dưới dạng các hàm thành viên thay vì add_day ().Lưu ý rằng việc gán và khởi tạo sao chép được cung cấp theo mặc định.
+ 
+HÀM KHỞI TẠO, XÓA, SAO CHÉP VÀ DI CHUYỂN
+1. Giới thiệu
+Chương này tập trung vào các khía cạnh kỹ thuật ‘‘ vòng đời ’’ của đối tượng: Làm cách nào để chúng ta tạo một đối tượng, cách chúng ta sao chép nó, cách chúng ta di chuyển nó và làm cách nào để dọn dẹp nó sau khi nó biến mất? Định nghĩa thích hợp của '' copy '' và '' move '' là gì?
+2. Hàm tạo và hàm hủy
+Chúng ta có thể chỉ định cách khởi tạo một đối tượng của một lớp bằng cách định nghĩa một phương thức khởi tạo. Để bổ sung cho các hàm tạo, chúng ta có thể xác định một hàm hủy để đảm bảo '' dọn dẹp '' tại điểm phá hủyđối tượng (ví dụ: khi nó vượt ra khỏi phạm vi). Một số thao tác hiệu quả nhất để quản lý tài nguyên trong C ++ dựa trên các cặp hàm tạo / hủy. Vì vậy, các kỹ thuật khác dựa trên một cặp hành động, chẳng hạn như thực hiện / hoàn tác, bắt đầu / dừng, trước / sau, v.v.
+Ví dụ: 
+struct Tracer {
+string mess;
+Tracer(const string& s) :mess{s} { cout << mess; }
+~Tracer() {cout << "˜" << mess; }
+};
+void f(const vector<int>& v)
+{
+Tracer tr {"in f()\n"};
+for (auto x : v) {
+Tracer tr {string{"v loop "}+to<string>(x)+'\n'}; 
+// ...
+}
+}
+Chúng ta có thể thực hiện lệnh f({2,3,5}); 
+Điều này sẽ hiện ra: in_f() v loop 2 ˜v loop 2 v loop 3 ˜v loop 3 v loop 5 ˜v loop 5 ˜in_f() 
+2.1 Hàm  hủy và tài nguyên
+Một hàm tạo khởi tạo một đối tượng. Nói cách khác, nó tạo ra môi trường mà các chức năng thành viên hoạt động. Đôi khi, việc tạo ra môi trường đó liên quan đến việc có được một tài nguyên - chẳng hạn như tệp, khóa hoặc một số bộ nhớ - phải được giải phóng sau khi sử dụng. Do đó, một số lớp cần một hàm để đảm bảo sẽ được khai báo khi một đối tượng bị hủy theo cách tương tự như cách một phương thức khởi tạo đảm bảo sẽ được gọi khi một đối tượng được tạo. Không thể tránh khỏi, một hàm như vậy được gọi là hàm hủy. Tên của hàm hủy là ˜ theo sau là tên lớp, ví dụ ~Vector (). Một nghĩa của  ~ là ‘‘ bổ sung ’’ và hàm hủy cho một lớp bổ sung cho các hàm tạo của nó. Một hàm hủy không nhận đối số và một lớp chỉ có thể có một hàm hủy. Bộ hủy được gọi ngầm khi một biến tự động vượt ra khỏi phạm vi, một đối tượng trên cửa hàng miễn phí bị xóa, v.v. Chỉ trong những trường hợp rất hiếm, người dùng mới cần gọi hàm hủy một cách rõ ràng. Hàm hủy thường dọn dẹp và giải phóng tài nguyên.
+Ví dụ:
+class Vector {
+public:
+Vector(int s) :elem{new double[s]}, sz{s} { }; // constructor: acquire memory
+˜Vector() { delete[] elem; } // destructor: release memory
+// ...
+private:
+double∗ elem; // elem points to an array of sz doubles
+int sz; // sz is non-negative
+}; 
+Tại đây, Vectơ v1 bị  hủy khi thoát khỏi f (). Ngoài ra, Vector  tạo trên class bởi f () sử dụng new sẽ bị hủy bởi lệnh xóa. Trong cả hai trường hợp, hàm hủy của Vector được gọi để giải phóng (phân bổ) bộ nhớ được cấp phát bởi hàm tạo. Điều gì sẽ xảy ra nếu hàm tạo không có đủ bộ nhớ?
+Ví dụ: s∗sizeof(double) or (s+s)∗sizeof(double) có thể lớn hơn dung lượng bộ nhớ khả dụng (tính bằng byte). Trong trường hợp đó, một ngoại lệ std :: bad_alloc bị vứt  bởi new và cơ chế xử lý ngoại lệ mở ra các hàm hủy thích hợp để  lấy và giải phóng tất cả bộ nhớ . Phương thức  quản lý tài nguyên dựa trên phương thức khởi tạo / hủy này được gọi là Khởi tạo Tài nguyên hay đơn giản là RAII. Một cặp hàm tạo / hàm hủy phù hợp là cơ chế thông thường để thực hiện khái niệm về một đối tượng có kích thước thay đổi trong C ++. Các vùng chứa thư viện tiêu chuẩn, chẳng hạn như vectơ và map không có thứ tự, sử dụng các biến thể của kỹ thuật này để cung cấp lưu trữ cho các phần tử của chúng. không có trình hủy được khai báo, chẳng hạn như kiểu tích hợp, được coi là có trình hủy không làm gì cả. Lập trình viên khai báo hàm hủy cho một lớp cũng phải quyết định xem đối tượng của lớp đó có thể được sao chép hoặc di chuyển hay không.
+
+3. Sao chép và Di chuyển
+Khi chúng ta cần chuyển một giá trị từ a sang b, chúng ta thường có hai lựa chọn khác nhau về mặt logic:
+• Sao chép là ý nghĩa quy ước của x = y; nghĩa là, giá trị của x và y đều bằng giá trị của y trước khi gán.
+ + Sao chép cho một lớp X được xác định bằng hai phép toán:
+• Sao chép hàm tạo: X (const X &)
+• Sao chép phép gán: X & operator = (const X &)
+• Di chuyển các  x với giá trị cũ của y và y với một số trạng thái đã chuyển. Đối với các trường hợp, vùng chứa, trạng thái được chuyển từ đó là ‘‘ trống ’’. Sự phân biệt này bị nhầm lẫn và thực tế là chúng ta sử dụng cùng một ký hiệu cho cả di chuyển và sao chép. Thông thường, không thể xóa đi bước di chuyển, trong khi một bản sao có thể (vì nó có thể cần lấy tài nguyên), và di chuyển thường hiệu quả hơn một bản sao. Khi bạn thực hiện một thao tác di chuyển, bạn nên để đối tượng nguồn ở trạng thái hợp lệ nhưng không xác định vì cuối cùng nó sẽ bị hủy và trình hủy không thể hủy đối tượng còn lại ở trạng thái không hợp lệ. Ngoài ra, các thuật toán thư viện tiêu chuẩn dựa vào việc có thể gán cho (sử dụng di chuyển hoặc sao chép) một đối tượng được chuyển đến. Vì vậy, hãy thiết kế các bước di chuyển của bạn   để các đối tượng nguồn cho phép  hủy và chuyển nhượng. Để tránh lặp lại, hãy sao chép và di chuyển các định nghĩa mặc định .
+Ví dụ: 
+template<class T>
+void swap(T& a, T& b)
+{
+const T tmp = a; // put a copy of a into tmp
+a = b; // put a copy of b into a
+b = tmp; // put a copy of tmp into b
+};
+4. Các chức năng deleted
+Chúng ta có thể ‘‘ xóa ’’ một hàm; nghĩa là, chúng ta có thể nói rằng một hàm không tồn tại và không thể  sử dụng nó. chức năng rõ ràng nhất là loại bỏ các chức năng mặc định khác. Ví dụ, người ta thường muốn ngăn chặn việc sao chép các lớp được sử dụng làm cơ sở vì việc sao chép như vậy dễ dẫn đến việc cắt lớp.
+class Base {
+// ...
+Base& operator=(const Base&) = delete;// disallow copying
+Base(const Base&) = delete;
+Base& operator=(Base&&) = delete; // disallow moving
+Base(Base&&) = delete;
+};
+Base x1;
+Base x2 {x1}; // error : no copy constructor
+Một chức năng nữa là kiểm soát nơi có thể cấp phát một lớp
+Lưu ý sự khác biệt giữa một hàm = deleted và một hàm chỉ đơn giản là chưa được khai báo. 
+
+
+ NẠP CHỒNG
+1. Giới thiệu
+Để thuận tiện cho việc trình bày và thảo luận liên quan đến các khái niệm được sử dụng thường xuyên, hầu hết các lĩnh vực kĩ thuật và phi kĩ thuật phát triển các kí hiệu viết tắt thông thường, ví dụ (x+y*z) thay vì (nhân y với z rồi cộng kết quả cho x).
+Giống như hầu hết các ngôn ngữ khác, C ++ hỗ trợ một tập hợp các toán tử cho các kiểu tích hợp của nó. Tuy nhiên, hầu hết các khái niệm mà các toán tử được sử dụng thông thường không phải là các kiểu tích hợp sẵn trong C ++, vì vậy chúng phải được biểu diễn dưới dạng các kiểu do người dùng định nghĩa. Ví dụ: nếu bạn cần số học phức tạp, đại số ma trận, tín hiệu logic hoặc chuỗi ký tự trong C ++, bạn sử dụng các class để biểu diễn các khái niệm này.
+Việc xác định các toán tử cho các class như vậy đôi khi cho phép lập trình viên cung cấp một ký hiệu thông thường và thuận tiện hơn để thao tác các đối tượng hơn là có thể đạt được chỉ bằng cách sử dụng ký hiệu chức năng cơ bản.
+class complex { // số phức đơn giản
+double re, im;
+public:
+complex(double r, double i) :re{r}, im{i} { }
+complex operator+(complex);
+complex operator∗(complex);
+};
+Đây là một cách triển khai đơn giản của khái niệm số phức.
+2. Nạp chồng hàm toán tử
+Các hàm xác định nghĩa cho các toán tử có thể được khai báo:
+ 
+Tên của một hàm toán tử là toán tử từ khóa được theo sau bởi chính toán tử đó, ví dụ, toán tử <<. Một hàm toán tử được khai báo và có thể được gọi như bất kỳ hàm nào khác. Việc sử dụng toán tử chỉ là cách viết tắt cho một lệnh gọi rõ ràng của hàm toán tử. Ví dụ:
+void f(complex a, complex b)
+{
+    complex c = a + b; // rút gọn
+    complex d = a.operator+(b); // rõ ràng
+}
+Với định nghĩa trên đây về số phức, hai bộ khởi tạo như nhau.
+2.1. Toán tử 2 ngôi và 1 ngôi
+Một toán tử 2 ngôi có thể được định nghĩa bởi một hàm thành viên không tĩnh mang một đối số hoặc một hàm không phải thành viên mang hai đối số.
+class X {
+public:
+    void operator+(int);
+    X(int);
+};
+void operator+(X,X);
+void operator+(X,double);
+void f(X a){
+    a+1; // a.operator+(1)
+    1+a; // ::operator+(X(1),a)
+    a+1.0; // ::operator+(a,1.0)
+}
+
+Toán tử một ngôi, dù là tiền tố hay hậu tố, nó có thể được xác định bởi một hàm thành viên không tĩnh không có đối số hoặc một hàm không phải là một đối số.
+class X {
+public:	// hàm thành viên
+X∗ operator&(); // tiền tố 1 ngôi (&)
+X operator&(X); // 2 ngôi & (And)
+X operator++(int); // tăng hậu tố
+X operator&(X,X); // Lỗi: có 3 thứ
+X operator/(); // Lỗi: có 1 ngôi
+};
+
+// hàm không là thành viên
+X operator−(X); // tiền tố 1 ngôi (-)
+X operator−(X,X); // 2 ngôi (-)
+X operator−−(X&,int); // giảm hậu tố
+X operator−(); // Lỗi: không có toán hạng
+X operator−(X,X,X); // Lỗi: có 3 thứ
+X operator%(X); // Lỗi: có 1 ngôi (%)
+2.2. Ý nghĩa được xác định trước cho các toán tử
+Ý nghĩa của một số toán tử dựng sẵn được định nghĩa tương đương với một số kết hợp của các toán tử khác trên cùng các đối số.
+
+class X {
+public:
+void operator=(const X&) = delete;
+void operator&() = delete;
+void operator,(const X&) = delete;
+};
+void f(X a, X b){
+a = b; // Lỗi : không có toán tử =()
+&a; // Lỗi : không có toán tử &()
+a,b; // Lỗi : không có toán tử,()
+}
+Ngoài ra, chúng có thể được đưa ra các nghĩa mới bằng các định nghĩa phù hợp.
+2.3. Toán tử và các loại do người dùng xác định
+Một hàm toán tử phải là một thành viên hoặc có ít nhất một đối số của kiểu do người dùng xác định (các hàm xác định lại toán tử new và delete không cần). Một hàm toán tử nhằm chấp nhận một kiểu dựng sẵn vì toán hạng đầu tiên của nó không thể là một hàm thành viên.
+Liệt kê là kiểu do người dùng xác định để chúng ta có thể xác định các toán tử cho chúng
+enum Day { sun, mon, tue, wed, thu, fri, sat };
+Day& operator++(Day& d){
+return d = (sat==d) ? sun : static_cast<Day>(d+1);
+}
+18.3. Một loại số phức
+void f(complex x, complex y, complex z){
+complex r1 {x+y+z}; // r1 = operator+(operator+(x,y),z)
+complex r2 {x}; // r2 = x
+r2 += y; // r2.operator+=(y)
+r2 += z; // r2.operator+=(z)
+}
+Ngoại trừ sự khác biệt về tính hiệu quả có thể xảy ra, các tính toán của r1 và r2 là tương đương.
+
+TOÁN TỬ ĐẶC BIỆT
+1. Giới thiệu
+Nạp chồng không chỉ dành cho các phép toán số học và logic. Trên thực tế, các toán tử đóng vai trò quan trọng trong việc thiết kế vùng chứa, '' con trỏ thông minh '', iterator và các class khác liên quan đến quản lý tài nguyên.
+2. Các toán tử đặc biệt
+ 
+Các toán tử [] (chỉ số dưới) và () (gọi) là một trong những toán tử hữu ích nhất do người dùng xác định.
+2.1. Toán tử gián tiếp
+Toán tử gián tiếp,  (còn được gọi là toán tử mũi tên), có thể được định nghĩa là toán tử hậu tố một ngôi. Ví dụ:
+class Ptr {
+X∗ operator−>();	};
+Việc biến đổi đối tượng p thành con trỏ p.operator  () không phụ thuộc vào thành viên m được trỏ tới. Đó là nghĩa mà toán tử  () là một toán tử hậu tố một ngôi. Tuy nhiên, không có cú pháp mới nào được giới thiệu, vì vậy tên thành viên vẫn được yêu cầu sau dấu 
+void g(Ptr p){
+X∗ q1 = p−>; // Lỗi
+X∗ q2 = p.operator−>(); // OK	}
+2.2. Tăng và Giảm
+Khi con người phát minh ra ''con trỏ thông minh'', họ thường quyết định cung cấp toán tử tăng ++ và toán tử giảm −− để phản ánh việc sử dụng các toán tử này cho các kiểu tích hợp. Điều này đặc biệt rõ ràng và cần thiết khi mục đích là thay thế một loại con trỏ thông thường bằng một loại '' con trỏ thông minh '' có cùng ngữ nghĩa, ngoại trừ việc nó thêm một chút kiểm tra lỗi thực thi. Ví dụ: hãy xem xét một chương trình truyền thống
+void f1(X a){// cách truyền thống
+X v[200];
+X∗ p = &v[0];
+p−−;
+∗p = a; // oops: p ngoài phạm vi
+++p;
+∗p = a; // OK	}
+Ở đây, chúng ta có thể muốn thay thế X ∗ bằng một đối tượng của một lớp Ptr <X> chỉ có thể được tham chiếu nếu nó thực sự trỏ đến X.
+void f2(Ptr<X> a){ // đã kiểm tra
+X v[200];
+Ptr<X> p(&v[0],v);
+p−−;
+∗p = a; // Lỗi thực thi: p ngoài phạm vi
+++p;
+∗p = a; // OK 	}
+2.3. Cấp phát và giải phóng
+Toán tử new có được bộ nhớ của nó bằng cách gọi một toán tử new (). Tương tự, toán tử xóa giải phóng bộ nhớ của nó bằng cách gọi một toán tử delete ().
+void∗ operator new(size_t); // sử dụng cho từng đối tượng
+void∗ operator new[](size_t); // sử dụng cho mảng
+void operator delete(void∗, size_t); // sử dụng cho từng đối tượng
+void operator delete[](void∗, size_t); // sử dụng cho mảng
+3. Các hàm hỗ trợ
+Một tập hợp các hàm hữu ích, luồng I/O, hỗ trợ các vòng lặp phạm vi cho, so sánh và nối. Tất cả những điều này đều phản ánh các lựa chọn thiết kế được sử dụng cho std::string. Cụ thể, << chỉ in các ký tự mà không cần thêm định dạng và >> bỏ qua khoảng trắng đầu tiên trước khi đọc cho đến khi tìm thấy khoảng trắng kết thúc.
+ostream& operator<<(ostream& os, const String& s){
+return os << s.c_str();   }
+
+istream& operator>>(istream& is, String& s){
+s = ""; // xóa xâu mục tiêu
+is>>ws; // bỏ qua khoảng trắng
+char ch = ' ';
+while(is.get(ch) && !isspace(ch))
+s += ch;
+return is;  }
+
+bool operator!=(const String& a, const String& b){
+return !(a==b); }
+4. Hàm bạn
+Một hàm được khai báo friend được cấp quyền truy cập vào việc triển khai một lớp giống như một hàm thành viên nhưng độc lập với lớp đó.
+Ví dụ, chúng ta có thể xác định một toán tử nhân Ma trận với một Vectơ. Tuy nhiên, thói quen nhân của chúng ta không thể là thành viên của cả hai. Ngoài ra, chúng ta không thực sự muốn cung cấp các chức năng truy cập cấp thấp để cho phép mọi người dùng có thể đọc và ghi toàn bộ biểu diễn của cả Ma trận và Vectơ. Để tránh điều này, chúng ta khai báo toán tử là bạn của cả hai
+constexpr rc_max {4}; // size của hàng và cột
+class Matrix {
+    Vector v[rc_max];
+    friend Vector operator∗(const Matrix&, const Vector&);  };
+class Vector {
+    float v[rc_max];
+    friend Vector operator∗(const Matrix&, const Vector&);  };
+Bây giờ toán tử ∗() có thể tiếp cận việc triển khai cả Vectơ và Ma trận. Điều đó sẽ cho phép các kỹ thuật triển khai phức tạp, nhưng thực hiện đơn giản:
+
+Vector operator∗(const Matrix& m, const Vector& v){
+Vector r;
+    for (int i = 0; i!=rc_max; i++) { // r[i] = m[i] * v;
+    r.v[i] = 0;
+    for (int j = 0; j!=rc_max; j++)
+    r.v[i] += m.v[i].v[j] ∗ v.v[j];
+    }
+return r;   }
+
+
+LỚP DẪN XUẤT
+
+1.Giới thiệu: 
+
+Một khái niệm không tồn tại một cách cô lập. Nó tồn tại cùng với các khái niệm liên quan và phần lớn sức mạnh của nó có được từ các mối quan hệ với các khái niệm khác nhau. Ví dụ, cố gắng giải thích những gì một chiếc xe hơi. Bạn sẽ sớm giới thiệu các khái niệm về bánh xe, động cơ, người lái xe, người đi bộ, xe tải, xe cứu thương, đường sá, dầu nhớt, vé chạy quá tốc độ, nhà nghỉ, v.v. Vì chúng tôi sử dụng các lớp để giải thích các khái niệm, vấn đề trở thành cách thể hiện mối quan hệ giữa các khái niệm. Tuy nhiên, chúng tôi không thể diễn đạt mối quan hệ tùy ý trực tiếp bằng ngôn ngữ lập trình. Ngay cả khi chúng tôi có thể, chúng tôi sẽ không muốn. Để trở nên hữu ích, các lớp của chúng ta nên được định nghĩa hẹp hơn so với các khái niệm hàng ngày của chúng và chính xác hơn. 
+
+Khái niệm về một lớp dẫn xuất và các cơ chế ngôn ngữ liên quan của nó được cung cấp để thể hiện các mối quan hệ thứ bậc, nghĩa là, để thể hiện tính chung giữa các lớp. Ví dụ, các khái niệm về hình tròn và hình tam giác có liên quan với nhau ở chỗ chúng đều là hình dạng; nghĩa là họ có chung khái niệm về một hình dạng. Do đó, chúng ta xác định rõ ràng lớp Circle và lớp Triangle để có chung lớp Shape. Trong trường hợp đó, lớp chung, ở đây Shape, được gọi là lớp cơ sở hoặc siêu lớp và các lớp dẫn xuất từ lớp đó, ở đây Circle và Triangle, được gọi là lớp dẫn xuất hoặc các lớp con. Biểu diễn hình tròn và hình tam giác trong một chương trình mà không liên quan đến khái niệm về hình dạng sẽ là thiếu một thứ thiết yếu. Chương này là sự khám phá ý nghĩa của ý tưởng đơn giản này, nó là cơ sở cho cái thường được gọi là lập trình hướng đối tượng. Các tính năng ngôn ngữ hỗ trợ xây dựng các lớp mới từ những lớp hiện có:
+
+
+•	Triển khai tính kế thừa : để tiết kiệm việc triển khai bằng cách chia sẻ các phương thức, thuộc tính được cung cấp bởi một lớp cơ sở
+•	Kế thừa giao diện: cho phép các lớp dẫn xuất khác nhau được sử dụng thay thế cho nhau thông qua giao diện được cung cấp bởi một lớp cơ sở chung.
+
+Kế thừa giao diện thường được gọi là đa hình thời gian chạy (hoặc đa hình động). Ngược lại, việc sử dụng thống nhất các lớp không liên quan đến tính kế thừa được cung cấp bởi các mẫu, thường được gọi là đa hình thời gian biên dịch (hoặc đa hình tĩnh).
+
+2.Lớp dẫn xuất
+
+Xây dựng một chương trình giao dịch với những người được một công ty tuyển dụng. Một chương trình có thể có cấu trúc dữ liệu như thế này
+struct Employee{
+	string name,
+	char middle_initial;
+	Date hiring_date;
+}
+Tiếp theo, chúng ta định nghĩa cấu trúc của người quản lý
+struct Manager {
+	Employee emp;
+	list<Employee*> group;
+}
+Một nhà quản lý cũng là một nhân viên; dữ liệu Employee được lưu trữ trong thành viên “emp” của đối tượng Manager. Điều này có thể hiển nhiên đối với người đọc là con người - đặc biệt là người đọc cẩn thận - nhưng không có gì nói với trình biên dịch và các công cụ khác rằng Manager cũng là Employee. Manager ∗ không phải là Employee ∗, vì vậy người ta không thể đơn giản sử dụng cái này khi người kia được yêu cầu. Đặc biệt, người ta không thể đặt một Manager vào danh sách Employee mà không cần viết mã đặc biệt. Chúng ta có thể sử dụng chuyển đổi loại rõ ràng trên Manager ∗ hoặc đưa địa chỉ của thành viên “emp” vào danh sách Employee. Tuy nhiên, cả hai giải pháp đều không phù hợp và có thể khá mù mờ. Cách tiếp cận đúng là tuyên bố rõ ràng rằng Manager là Employee, với một vài thông tin được thêm vào:
+
+struct Manager : public Employee{
+	list<Employee*>group;
+}
+
+Manager có nguồn gốc từ Employee, và ngược lại, Employee là một lớp cơ sở cho Manager. Lớp Manager có các thuộc tính  của lớp Employee (tên người, phòng ban, v.v.) ngoài các thành viên của chính nó (nhóm, cấp, v.v.).
+
+Khởi tạo thường được biểu diễn bằng đồ thị bởi một con trỏ từ lớp dẫn xuất đến lớp cơ sở của nó cho biết rằng lớp dẫn xuất tham chiếu đến cơ sở của nó (thay vì ngược lại):
+
+Một lớp dẫn xuất thường được cho là kế thừa các thuộc tính từ cơ sở của nó, vì vậy mối quan hệ còn được gọi là kế thừa. Một lớp cơ sở đôi khi được gọi là lớp cha và lớp dẫn xuất là lớp con. Tuy nhiên, thuật ngữ này gây nhầm lẫn cho những người quan sát rằng dữ liệu trong một đối tượng lớp dẫn xuất là một tập siêu dữ liệu của một đối tượng thuộc lớp cơ sở của nó. Một lớp dẫn xuất thường lớn hơn (và không bao giờ nhỏ hơn) so với lớp cơ sở của nó theo nghĩa là nó chứa nhiều dữ liệu hơn và cung cấp nhiều chức năng hơn.
+
+Một cách triển khai phổ biến và hiệu quả của khái niệm lớp dẫn xuất có một đối tượng của lớp dẫn xuất được biểu diễn như một đối tượng của lớp cơ sở, với 
+thông tin thuộc về lớp dẫn xuất cụ thể được thêm vào cuối. Ví dụ:
+
+ 
+PHÂN CẤP LỚP
+1. Giới thiệu:
+Trọng tâm chính của chương này là các kỹ thuật thiết kế, hơn là các tính năng ngôn ngữ. Các ví dụ được lấy từ thiết kế giao diện người dùng, nhưng tôi tránh chủ đề về lập trình hướng sự kiện như thường được sử dụng cho các hệ thống giao diện người dùng đồ họa (GUI). 
+
+2. Triển khai kế thừa:
+Một cấu trúc phân cấp lớp sử dụng kế thừa thực thi (như thường thấy trong các chương trình cũ hơn). Lớp Ival_box xác định giao diện cơ bản cho tất cả các Ival_box và chỉ định triển khai mặc định mà các loại Ival_box cụ thể hơn có thể ghi đè bằng các phiên bản của riêng chúng. Ngoài ra, khai báo dữ liệu cần thiết để triển khai khái niệm cơ bản:
+Class iVal_box {
+Protected:
+Int val, low, high;
+Bool changed {false};
+Public:
+Ival_box(int ll, int hh) : val {ll}, low {ll}, high {ll} { }
+Virtual int get_value() {changed = false, return val; }
+Virtual void set_value(int i) {changed = true, val = i; }
+Virtual void reset_value(int i) {changed = false, val = i; }
+Virtual void prompt() { }
+Virtual bool was_changed () const {return changed;}
+}
+Việc triển khai mặc định của các chức năng là khá cẩu thả và được cung cấp ở đây chủ yếu để minh họa ngữ nghĩa dự định. Ví dụ, một lớp thực tế sẽ cung cấp một số kiểm tra phạm vi. Một lập trình viên nên sử dụng “ival classes” như thế này:
+ 
+
+Hầu hết mã ứng dụng được viết dưới dạng (con trỏ tới) Ival_boxes thuần túy như cách tương tác (). Bằng cách đó, ứng dụng không muốn biết về số lượng lớn các biến thể tiềm ẩn của khái niệm Ival_box. Kiến thức của các lớp chuyên biệt như vậy bị cô lập trong tương đối ít chức năng tạo ra các đối tượng như vậy. Điều này cách ly người dùng khỏi những thay đổi trong việc triển khai các lớp dẫn xuất. Hầu hết các mã có thể bị lãng quên bởi thực tế là có nhiều loại Ival_box khác nhau.
+Các loại Ival_box khác nhau được định nghĩa là các lớp bắt nguồn từ Ival_box. Ví dụ:
+Class Ival_slider : public Ival_box {
+Private:
+// nội dung đồ họa để xác định thanh trượt trông như thế nào, v.v.
+Public:
+Ival_slider (int, int);
+Int get_value () override;
+Void promt () override;
+}
+Các thành viên dữ liệu của Ival_box đã được khai báo được bảo vệ để cho phép truy cập từ các lớp dẫn xuất. Do đó, Ival_slider :: g et_value () có thể gửi một giá trị vào Ival_box :: val. Thành viên được bảo vệ có thể truy cập được từ các thành viên của chính lớp và từ các thành viên của các lớp dẫn xuất, nhưng không phải đối với người dùng thông thường
+Ngoài Ival_slider, chúng tôi sẽ xác định các biến thể khác của khái niệm Ival_box. Chúng có thể bao gồm Ival_dial, cho phép bạn chọn một giá trị bằng cách xoay một núm; Flashing_ival_slider, nhấp nháy khi bạn yêu cầu promt (); và Popup_ival_slider, phản hồi với prompt () bằng cách xuất hiện ở một số nơi nổi bật, do đó khiến người dùng khó có thể bỏ qua.
+Chúng ta sẽ lấy đồ họa từ đâu? Hầu hết các hệ thống giao diện người dùng cung cấp một lớp xác định các thuộc tính cơ bản của một thực thể trên màn hình. Vì vậy, nếu chúng tôi sử dụng hệ thống từ ‘‘ Big Bucks Inc. ’’, chúng tôi sẽ phải làm cho mỗi lớp Ival_slider, Ival_dial, v.v., của chúng tôi trở thành một loại BBwidget. Điều này đơn giản nhất sẽ đạt được bằng cách viết lại Ival_box của chúng tôi để nó bắt nguồn từ BBwidget.
+Theo cách đó, tất cả các lớp của chúng ta kế thừa tất cả các thuộc tính của một BBwidget. Ví dụ: mọi Ival_box đều có thể được đặt trên màn hình, tuân theo các quy tắc về kiểu đồ họa, được thay đổi kích thước, được kéo xung quanh, v.v., theo tiêu chuẩn do hệ thống BBwidget đặt ra. Hệ thống phân cấp lớp của chúng ta sẽ trông như thế này:
+ 
+Hoặc có dạng đồ thị:
+ 
+
