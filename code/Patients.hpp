@@ -291,6 +291,16 @@ int BST::countPlace(Node *root, string q_place){
     }   
     return count;
 }
+void BST::checkHealth(Node *root){
+    change.Delete();
+    DList d = inOrder(root);
+    DNode *p = d.getTail();
+    while(p != NULL){
+        if((p->data.getInJect == 1 || p->data.getInJect == 2) && p->data.getQ_day < 21 && (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<p->data.getId()<<" is Safe"<<endl;  
+        else cout<<p->data.getId()<<" is not safe"<<endl;
+        p = p->prev;
+    }
+}
 void BST::statistics(Node* root){
     change.Delete();    
     int count = 0;
@@ -331,14 +341,14 @@ void BST::maxQ_day(Node *root){
 }
 void BST::exportPatients(ofstream &file, Node *root){
     change.Delete();
-    DList d = posOrder(root);
-    DNode *p = d.getHead();
+    DList d = inOrder(root);
+    DNode *p = d.getTail();
     int count = 1;
     while(p != NULL){
         file<<"STT: "<<count<<" ";
         file<<p->data<<endl;
         count++;
-        p = p->next;
+        p = p->prev;
     }
     file.close();
 }
