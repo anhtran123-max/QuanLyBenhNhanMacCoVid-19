@@ -32,7 +32,7 @@ class BST {
         Node* erase(Node* root, Patient val);//xóa 
         DList preOrder(Node* root);//duyệt trước
         DList inOrder(Node* root);//duyệt giữa
-        DList postOrder(Node* root);//duyệt sau
+        DList posOrder(Node* root);//duyệt sau
         void edit(Node* root); //sửa bệnh nhân
         void add(Node* root);//thêm bệnh nhân TODO:
         void remove(Node* root);//xóa bệnh nhân TODO:
@@ -65,10 +65,10 @@ DList BST::inOrder(Node* root){
     }
     return change;
 }
-DList BST::postOrder(Node* root){
+DList BST::posOrder(Node* root){
     if(root != NULL){
-        postOrder(root->left);
-        postOrder(root->right);
+        posOrder(root->left);
+        posOrder(root->right);
         change.push(root->data);
     }
     return change;
@@ -86,7 +86,7 @@ bool BST::existPatient(string id){ //duyệt trước
 bool BST::validInfection(string infection){ //duyệt sau
     if(infection == "NO") return true;
     change.Delete();
-    DList d = postOrder(root);
+    DList d = posOrder(root);
     DNode* p = d.getHead();
     while(p != NULL){
         if(p->data.getId() == infection) return true;
@@ -280,7 +280,7 @@ void BST::F0Status(Node* root){
 // thong ke noi cach ly
 int BST::countPlace(Node *root, string q_place){
     change.Delete();
-    DList d = postOrder(root);
+    DList d = posOrder(root);
     DNode *p = d.getHead();
     int count = 0;
     while(p != NULL){
@@ -293,39 +293,25 @@ int BST::countPlace(Node *root, string q_place){
 }
 void BST::statistics(Node* root){
     change.Delete();    
-    DList d = postOrder(root);
-    DNode *p = d.getHead();
-    //TK-PLAZA
-    cout << "==>>>" << "TK-PLAZA" << " has " << countPlace(root, "TK-PLAZA") << " people" << endl;
+    int count = 0;
+    DList d = inOrder(root);
+    DNode *p = d.getTail();
+    cout<<"Place: "<<p->data.getPlace()<<endl;
     while(p != NULL){
-        if(p->data.getPlace().compare("TK-PLAZA") == 0){
-            cout << "ID: " << p->data.getId() << "\t" << "Name: " << p->data.getName()
-            << "\t" <<"Infected: " << p->data.getInfect() << "\t" <<"Status: "
-            << p->data.getStatus() << endl;
+        cout<<p->data;
+        count++;
+        if(p->prev == NULL){
+            cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
+            break;
         }
-        p = p->next;
-    }
-    //Q9
-    p = d.getHead();
-    cout << "==>>>" << "Q9" << " has " << countPlace(root, "Q9") << " people" << endl;
-    while(p != NULL){
-         if(p->data.getPlace().compare("Q9") == 0){
-             cout << "ID: " << p->data.getId() << "\t" << "Name: " <<p->data.getName()
-             << "\t" <<"Infected: " << p->data.getInfect() << "\t" <<"Status: "
-             << p->data.getStatus() << endl;
-         }
-        p = p->next;
-    }
-    //TD
-    p = d.getHead();
-    cout << "==>>>" << "TD" << " has " << countPlace(root, "TD") << " people" << endl;
-    while(p != NULL){
-        if(p->data.getPlace().compare("TD") == 0){
-            cout << "ID: " << p->data.getId() << "\t" << "Name: " <<p->data.getName()
-            << "\t" <<"Infected: " << p->data.getInfect() << "\t" <<"Status: "
-            << p->data.getStatus() << endl;
+        if(p->prev->data.getPlace() != p->data.getPlace()){
+            cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
+            count = 0;
+            if(p->prev != NULL){
+                cout<<"Place: "<<p->prev->data.getPlace()<<endl;
+            }
         }
-        p = p->next;
+        p = p->prev;
     }
 }
 void BST::maxQ_day(Node *root){
@@ -345,7 +331,7 @@ void BST::maxQ_day(Node *root){
 }
 void BST::exportPatients(ofstream &file, Node *root){
     change.Delete();
-    DList d = postOrder(root);
+    DList d = posOrder(root);
     DNode *p = d.getHead();
     int count = 1;
     while(p != NULL){
@@ -379,7 +365,7 @@ void BST::function(void){
     //F(root);
     //F0Status(root);
     //sortByName(root);
-    cout << "\nThe number of patients in quarantine place: \n";
+    //cout << "\nThe number of patients in quarantine place: \n";
     statistics(root);
     maxQ_day(root);
     exportPatients(file,root);

@@ -82,7 +82,6 @@ istream& operator>>(istream &input, Patient &patient){
         input>>patient.injection;
         if(!check(patient.injection)) cout<<"Error, enter again!"<<endl;
     }while(!check(patient.injection));
-    cout<<"NOTE - input quarantine place: 1.TK-PLAZA, 2.TD, 3.Q9"<<endl;
     cout<<"Quarantine place: ";
     fflush(stdin);
     getline(input,patient.place);
@@ -93,6 +92,6 @@ istream& operator>>(istream &input, Patient &patient){
 }
 ostream& operator<<(ostream& output, Patient patient){
     output<<"Id: "<<patient.getId()<<", Name: "<<patient.getName()<<" ("<<patient.getDay()<<","<<patient.getMonth()<<","<<patient.getYear()<<")"<<", Address: "<<patient.getAddress()<<endl;
-    output<<"Status: "<<patient.status<<", Infection: "<<patient.infection<<", Quarantine place: "<<patient.place<<", Day need to quarantine: "<<patient.q_day<<endl;
+    output<<"Status: "<<patient.status<<", Infection: "<<patient.infection<<", Injection: "<<patient.injection<<", Quarantine place: "<<patient.place<<", Day need to quarantine: "<<patient.q_day<<endl;
     return output;
 }
