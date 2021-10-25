@@ -86,7 +86,6 @@ istream& operator>>(istream &input, Patient &patient){
         input>>patient.injection;
         if(!check(patient.injection)) cout<<"Error, enter again!"<<endl;
     }while(!check(patient.injection));
-    cout<<"NOTE - input quarantine place: 1.TK-PLAZA, 2.TD, 3.Q9"<<endl;
     cout<<"Quarantine place: ";
     fflush(stdin);
     getline(input,patient.place);
