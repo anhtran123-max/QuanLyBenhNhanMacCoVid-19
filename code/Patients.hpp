@@ -322,7 +322,7 @@ void BST::maxQ_day(Node *root){
     DNode *p = d.getHead();
     p = d.getHead();
     cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-    cout<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Addres" << "\t|\t" << "Status" << "\t|\t" <<
+    cout<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Address" << "\t|\t" << "Status" << "\t|\t" <<
     "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
     cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
@@ -342,7 +342,7 @@ void BST::exportPatients(ofstream &file, Node *root){
     DNode *p = d.getTail();
     int count = 1;
     file<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-    file<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Addres" << "\t|\t" << "Status" << "\t|\t" <<
+    file<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Address" << "\t|\t" << "Status" << "\t|\t" <<
     "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
     file<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
@@ -355,7 +355,7 @@ void BST::exportPatients(ofstream &file, Node *root){
 }
 void BST::function(void){
     int n;
-    ofstream file("data.txt");
+    ofstream file("./code/data.txt");
     cout<<"\nEnter amount of patients: "; cin>>n;
     for(int i=0; i<n; i++){
         cout<<"-->Enter infomation of Patent "<<i+1<<endl;
