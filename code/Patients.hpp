@@ -278,45 +278,36 @@ void BST::F0Status(Node* root){
     }
 }
 // thong ke noi cach ly
-int BST::countPlace(Node *root, string q_place){
-    change.Delete();
-    DList d = posOrder(root);
-    DNode *p = d.getHead();
-    int count = 0;
-    while(p != NULL){
-        if(p->data.getPlace().compare(q_place) == 0){
-            count++;
-        }
-        p= p->next;    
-    }   
-    return count;
-}
 void BST::checkHealth(Node *root){
     change.Delete();
     DList d = inOrder(root);
     DNode *p = d.getTail();
     while(p != NULL){
-        if((p->data.getInJect == 1 || p->data.getInJect == 2) && p->data.getQ_day < 21 && (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<p->data.getId()<<" is Safe"<<endl;  
+        if((p->data.getInJect() == 1 || p->data.getInJect() == 2) && p->data.getQ_day() < 21 && (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<p->data.getId()<<" is Safe"<<endl;  
         else cout<<p->data.getId()<<" is not safe"<<endl;
         p = p->prev;
     }
 }
 void BST::statistics(Node* root){
     change.Delete();    
-    int count = 0;
+    int count = 0, stt = 1;
     DList d = inOrder(root);
     DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     while(p != NULL){
+        cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout <<"|\t"<< stt << "\t|\t";
         cout<<p->data;
         count++;
+        stt++;
         if(p->prev == NULL){
-            cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
+            cout<<"===>>Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             break;
         }
         if(p->prev->data.getPlace() != p->data.getPlace()){
-            cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
+            cout<<"===>>Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             count = 0;
+            stt = 1;
             if(p->prev != NULL){
                 cout<<"Place: "<<p->prev->data.getPlace()<<endl;
             }
@@ -326,26 +317,36 @@ void BST::statistics(Node* root){
 }
 void BST::maxQ_day(Node *root){
     change.Delete();
-    int count = 0;
+    int count = 0, stt = 1;
     DList d = preOrder(root);
     DNode *p = d.getHead();
     p = d.getHead();
+    cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Addres" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
         if(p->data.getQ_day() > 21){
+            cout <<"|\t"<< stt << "\t|\t";
             cout<<p->data;
             count++;
+            stt++;
         }
         p = p->next;
     }
-    cout << "-->The number of people have quarantine day > 21: " << count <<endl;
+    cout << "===>>The number of people have quarantine day > 21: " << count <<endl;
 }
 void BST::exportPatients(ofstream &file, Node *root){
     change.Delete();
     DList d = inOrder(root);
     DNode *p = d.getTail();
     int count = 1;
+    file<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    file<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t|\t" << "Birth" << "\t|\t" << "Addres" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    file<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
-        file<<"STT: "<<count<<" ";
+        file<<"|\t"<< count << "\t|\t";
         file<<p->data<<endl;
         count++;
         p = p->prev;
@@ -355,7 +356,7 @@ void BST::exportPatients(ofstream &file, Node *root){
 void BST::function(void){
     int n;
     ofstream file("data.txt");
-    cout<<"Enter amount of patients: "; cin>>n;
+    cout<<"\nEnter amount of patients: "; cin>>n;
     for(int i=0; i<n; i++){
         cout<<"-->Enter infomation of Patent "<<i+1<<endl;
         Patient a;
@@ -377,6 +378,7 @@ void BST::function(void){
     //sortByName(root);
     //cout << "\nThe number of patients in quarantine place: \n";
     statistics(root);
+    cout << "\n--------------------\n";
     maxQ_day(root);
     exportPatients(file,root);
     Free(root);
