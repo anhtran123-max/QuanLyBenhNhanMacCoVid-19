@@ -1,6 +1,8 @@
 #include "Patient.hpp"
 #include "Doubly.hpp"
 #include<bits/stdc++.h>
+#include <conio.h>
+#include <cstdlib>
 class Node{
     public:
         Patient data;
@@ -235,11 +237,11 @@ void BST::find(Node* root){
         return;
         } else {
             if(p->data.getId()==id_find){
-            cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-            cout<< "|\tSTT"<< "\t|\t" << "ID" << "\t|\t" << "Name" << "\t\t\t|\t" << "Birth" << "\t\t|\t" << "Addres" << "\t|\t" << "Status" << "\t|\t" <<
+            cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
             "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
-            cout<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl; 
-            cout <<"|\t"<< 1 << "\t|\t";
+            cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout <<"| "<< 1 << " |\t";
             cout << p->data << endl;
             }
             break;
@@ -328,19 +330,6 @@ void BST::F0Status(Node* root){
     }
 }
 // thong ke noi cach ly
-int BST::countPlace(Node *root, string q_place){
-    change.Delete();
-    DList d = posOrder(root);
-    DNode *p = d.getHead();
-    int count = 0;
-    while(p != NULL){
-        if(p->data.getPlace().compare(q_place) == 0){
-            count++;
-        }
-        p= p->next;    
-    }   
-    return count;
-}
 void BST::checkHealth(Node *root){
     change.Delete();
     DList d = inOrder(root);
@@ -353,13 +342,19 @@ void BST::checkHealth(Node *root){
 }
 void BST::statistics(Node* root){
     change.Delete();    
-    int count = 0;
+    int count = 0, stt = 1;
     DList d = inOrder(root);
     DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
+        cout <<"| "<< stt << " |\t";
         cout<<p->data;
         count++;
+        stt++;
         if(p->prev == NULL){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             break;
@@ -367,8 +362,13 @@ void BST::statistics(Node* root){
         if(p->prev->data.getPlace() != p->data.getPlace()){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             count = 0;
+            stt = 1;
             if(p->prev != NULL){
                 cout<<"Place: "<<p->prev->data.getPlace()<<endl;
+                cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+                "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+                cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
             }
         }
         p = p->prev;
@@ -376,14 +376,20 @@ void BST::statistics(Node* root){
 }
 void BST::maxQ_day(Node *root){
     change.Delete();
-    int count = 0;
+    int count = 0, stt = 1;
     DList d = preOrder(root);
     DNode *p = d.getHead();
     p = d.getHead();
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
         if(p->data.getQ_day() > 21){
+            cout <<"| "<< stt << " |\t";
             cout<<p->data;
             count++;
+            stt++;
         }
         p = p->next;
     }
@@ -394,18 +400,28 @@ void BST::exportPatients(ofstream &file, Node *root){
     DList d = inOrder(root);
     DNode *p = d.getTail();
     int count = 1;
+    file<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    file<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    file<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
-        file<<"STT: "<<count<<" ";
+        file<<"| "<< count << " |\t";
         file<<p->data<<endl;
         count++;
         p = p->prev;
     }
     file.close();
 }
+void pressAnyKey(){
+    cout << "\n\n   ...Clik any keyboard to continute";
+    getch();
+    system("cls");
+}
 void BST::function(void){
     int n;
+    char choice_admin;
     ofstream file("data.txt");
-    cout<<"Enter amount of patients: "; cin>>n;
+    cout<< endl <<"Enter amount of patients: "; cin>>n;
     for(int i=0; i<n; i++){
         cout<<"-->Enter infomation of Patent "<<i+1<<endl;
         Patient a;
@@ -421,14 +437,77 @@ void BST::function(void){
         root = add(root,a);
         size++;
     }
-    //edit(root);
-    //F(root);
-    //F0Status(root);
-    //sortByName(root);
-    //cout << "\nThe number of patients in quarantine place: \n";
-    statistics(root);
-    maxQ_day(root);
-    exportPatients(file,root);
+    do {
+        system("cls");
+        cout << setw(135) <<"####################### MANAGEMENT PATIENTS ######################" << endl;
+        cout << setw(135) <<"#================================================================#" << endl;
+        cout << setw(135) <<"######    Class :CNTT K61  BM CNTT - DH GTVT PH.TPHCM       ######" << endl;
+        cout << setw(135) <<"#================================================================#" << endl;
+        cout << setw(135) <<"#================================================================#" << endl;
+        cout << setw(135) <<"# 1-Edit patient                      5-Patients have Q-Day > 21 #" << endl;
+        cout << setw(135) <<"# 2-Statistics F by id                6-Patients at Q-Place      #" << endl;                           
+        cout << setw(135) <<"# 3-Status statistic F0               7-Print file               #" << endl; 
+        cout << setw(135) <<"# 4-Sort by name                                                 #" << endl;
+        cout << setw(135) <<"###                      ESC-Exit program                      ###" << endl;    
+        cout << setw(135) <<"#================================================================#" << endl;
+        cout << setw(135) <<"##################################################################" << endl;
+        cout << setw(90) <<"What is your choice: ";
+        fflush(stdin);
+        choice_admin = getch();
+        cout << endl;
+        switch(choice_admin){
+            case 49:
+            {
+                edit(root);
+                pressAnyKey();
+                break;
+            }
+            case 50:
+            {
+                F(root);
+                pressAnyKey();
+                break;
+            }
+            case 51:
+            {
+                F0Status(root);
+                pressAnyKey();
+                break;
+            }
+            case 52:
+            {
+                sortByName(root);
+                pressAnyKey();
+                break;
+            }
+            case 53:
+            {
+                statistics(root);
+                pressAnyKey();
+                break;
+            }
+            case 54:
+            {
+                maxQ_day(root);
+                pressAnyKey();
+                break;
+            }
+            case 55:
+            {
+                exportPatients(file,root);
+                pressAnyKey();
+                break;
+            }
+            case 27:
+            {
+                cout <<"GOOD BYE";
+                break;
+            }
+            default:
+            {
+                cout <<"Choice is non-valid." << endl;
+            }
+        }
+    } while(choice_admin != 27);
     Free(root);
 }
-//hihi

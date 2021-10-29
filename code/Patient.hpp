@@ -96,7 +96,7 @@ istream& operator>>(istream &input, Patient &patient){
 }
 ostream& operator<<(ostream& output, Patient patient){
     output<<patient.getId()<<"\t|\t"<<patient.getName()<<"\t|\t"<<patient.getDay()<<"/"<<patient.getMonth()<<"/"<<patient.getYear()<<"\t|\t"<<patient.getAddress()
-    <<"\t|\t"<<patient.status<<"\t|\t"<<patient.infection<<  "\t|\t"  << patient.injection <<"\t|\t"<<patient.place<<"\t|\t"<<patient.q_day<<"\t|"<<endl;
-    output<<"-----------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    <<"\t\t|\t"<<patient.status<<"\t|\t"<<patient.infection<<  "\t|\t"  << patient.injection <<"\t|\t"<<patient.place<<"\t|\t"<<patient.q_day<<"\t|"<<endl;
+    output<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     return output;
 }
