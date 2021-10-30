@@ -430,7 +430,7 @@ void BST::function(void){
         root = add(root,a);
         size++;
     }
-    while(choice_admin != 27){
+    do {
         system("cls");
         cout << setw(135) <<"####################### MANAGEMENT PATIENTS ######################" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
@@ -501,6 +501,6 @@ void BST::function(void){
                 cout <<"Choice is non-valid." << endl;
             }
         }
-    }
+    } while(choice_admin != 27);
     Free(root);
 }

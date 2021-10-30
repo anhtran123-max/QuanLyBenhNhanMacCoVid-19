@@ -4,6 +4,7 @@
 using namespace std;
 
 int main(){
+    system("color b0");
     BST list;
     char password[6];
     char check_password[6] = "12345";
