@@ -413,14 +413,15 @@ void BST::exportPatients(ofstream &file, Node *root){
     }
     file.close();
 }
-void pressAnyKey(){
-    cout << "\n\n   ...Clik any keyboard to continute";
-    getch();
-    system("cls");
-}
+// void pressAnyKey(){
+//     cout << "\n\n   ...Clik any keyboard to continute";
+//     getch();
+//     system("cls");
+// }
 void BST::function(void){
     int n;
     char choice_admin;
+    system("color b0");
     ifstream file_in("./code/input.txt");
     ofstream file("./code/data.txt");
     file_in>>n;
@@ -452,43 +453,43 @@ void BST::function(void){
             case 49:
             {
                 edit(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 50:
             {
                 F(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 51:
             {
                 F0Status(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 52:
             {
                 sortByName(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 53:
             {
                 statistics(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 54:
             {
                 maxQ_day(root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 55:
             {
                 exportPatients(file,root);
-                pressAnyKey();
+                system("pause");
                 break;
             }
             case 27:
@@ -499,6 +500,7 @@ void BST::function(void){
             default:
             {
                 cout <<"Choice is non-valid." << endl;
+                break;
             }
         }
     } while(choice_admin != 27);

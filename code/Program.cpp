@@ -11,25 +11,24 @@ int main(){
     int i, time = 3;
     cout << "Please enter password (5 characters): ";
     while(1){
-    for(i = 0; i < 5; i++){               
-        password[i] = getch();
-        cout << "*";
-    }
-    password[i] = '\0';
-    if(strcmp(check_password,password) == 0){
-        list.function();
-        fflush(stdin);
-        getchar();
-    } else {
-        cout << "\n----------------------------------------------------";
-        cout << "\nYou still have " << time << " access" << endl;
-        time--;
-        if(time == -1){
+        for(i = 0; i < 5; i++){
+            password[i] = getch();
+            cout << "*";
+        }
+        password[i] = '\0';
+        if(strcmp(check_password,password) == 0){
+            list.function();
             break;
-        }
-        cout << "Please enter password (5 characters): ";
+        }else{
+            cout << "\n----------------------------------------------------";
+            cout << "\nYou still have " << time << " access" << endl;
+            time--;
+            if(time == -1){
+                break;
             }
-        }
-    cout << "Good bye";
+            cout << "Please enter password (5 characters): ";
+            }
+    }
+    //cout << "Good bye";
     return 0;
 }
