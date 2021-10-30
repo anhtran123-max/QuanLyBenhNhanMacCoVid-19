@@ -101,9 +101,10 @@ bool timeTest(int day, int month, int year){//hàm ngoài
 }
 istream& operator>>(istream &input, Person& person){
     cout<<"id: ";
+    input>>std::ws;//skip whitespace
     input>>person.id;
     cout<<"Name: ";
-    fflush(stdin);
+    input>>std::ws;
     getline(input,person.name);
     cout<<"-Birthday: "<<endl;
     do{
@@ -116,7 +117,7 @@ istream& operator>>(istream &input, Person& person){
         if(!timeTest(person.day, person.month, person.year)) cout<<"Error, enter again!"<<endl;
     }while(!timeTest(person.day, person.month, person.year));
     cout<<"Address: ";
-    fflush(stdin);
+    input>>std::ws;
     getline(input, person.address);
     return input;
 }

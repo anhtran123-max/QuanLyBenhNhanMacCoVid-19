@@ -74,7 +74,7 @@ istream& operator>>(istream &input, Patient &patient){
     do{
         cout<<"NOTE - input status: healthy=0, lightly=1, heavily =2"<<endl;
         cout<<"Status: ";
-        fflush(stdin);
+        input>>std::ws;
         input>>patient.status;
         if(!check(patient.status)) cout<<"Error, enter again!"<<endl;
     }while(!check(patient.status));
@@ -87,10 +87,10 @@ istream& operator>>(istream &input, Patient &patient){
         if(!check(patient.injection)) cout<<"Error, enter again!"<<endl;
     }while(!check(patient.injection));
     cout<<"Quarantine place: ";
-    fflush(stdin);
+    input>>std::ws;
     getline(input,patient.place);
     cout<<"Day need to quarantine: ";
-    fflush(stdin);
+    input>>std::ws;
     input>>patient.q_day;
     return input;
 }

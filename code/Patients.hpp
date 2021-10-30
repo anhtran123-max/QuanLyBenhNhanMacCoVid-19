@@ -3,6 +3,7 @@
 #include<bits/stdc++.h>
 #include <conio.h>
 #include <cstdlib>
+
 class Node{
     public:
         Patient data;
@@ -420,20 +421,12 @@ void pressAnyKey(){
 void BST::function(void){
     int n;
     char choice_admin;
-    ofstream file("data.txt");
-    cout<< endl <<"Enter amount of patients: "; cin>>n;
+    ifstream file_in("./code/input.txt");
+    ofstream file("./code/data.txt");
+    file_in>>n;
     for(int i=0; i<n; i++){
-        cout<<"-->Enter infomation of Patent "<<i+1<<endl;
         Patient a;
-        do{
-        cin>>a;
-        if(existPatient(a.getId())){
-            cout<<"Same id, enter again!!"<<endl;
-        }
-        if(!validInfection(a.getInfect())){
-            cout<<"Invalid infection!!"<<endl;
-        }
-        }while((existPatient(a.getId())) || (!validInfection(a.getInfect())));
+        file_in>>a;
         root = add(root,a);
         size++;
     }
