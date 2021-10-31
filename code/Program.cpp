@@ -29,6 +29,5 @@ int main(){
             cout << "Please enter password (5 characters): ";
             }
     }
-    //cout << "Good bye";
     return 0;
 }
