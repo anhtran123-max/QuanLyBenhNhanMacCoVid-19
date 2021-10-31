@@ -315,7 +315,7 @@ void BST::F0Status(Node* root){
     cout<<"---Status of F0 patient---"<<endl;
     while(p != NULL){
         if(p->data.getInfect() == "NO"){
-            cout<<"Id: "<<p->data.getId()<<": ";
+            cout<<"Id: "<<p->data.getId()<<" is ";
             switch(p->data.getStatus()){
                 case 0:
                 cout<<"Healthy"<<endl;
@@ -424,7 +424,7 @@ void BST::function(void){
     int n;
     char choice_admin;
     system("color b0");
-    ifstream file_in("./code/input.txt");
+    ifstream file_in("./code/input.in");
     ofstream file("./code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){

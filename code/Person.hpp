@@ -26,7 +26,8 @@ class Person{
         int getDay();
         int getMonth();
         int getYear();
-        friend istream& operator>>(istream& input, Person &person);
+        virtual void toStream(istream& input);
+        friend istream& operator>>(istream&, Person &);
 };
 Person::Person(){
     this->id = "";
@@ -99,25 +100,28 @@ bool timeTest(int day, int month, int year){//hàm ngoài
     }
     return false;
 }
-istream& operator>>(istream &input, Person& person){
+void Person::toStream(istream& input){
     cout<<"id: ";
     input>>std::ws;//skip whitespace
-    input>>person.id;
+    input>>id;
     cout<<"Name: ";
     input>>std::ws;
-    getline(input,person.name);
+    getline(input,name);
     cout<<"-Birthday: "<<endl;
     do{
         cout<<"Day: ";
-        input>>person.day;
+        input>>day;
         cout<<"Month: ";
-        input>>person.month;
+        input>>month;
         cout<<"Year: ";
-        input>>person.year;
-        if(!timeTest(person.day, person.month, person.year)) cout<<"Error, enter again!"<<endl;
-    }while(!timeTest(person.day, person.month, person.year));
+        input>>year;
+        if(!timeTest(day, month, year)) cout<<"Error, enter again!"<<endl;
+    }while(!timeTest(day, month, year));
     cout<<"Address: ";
     input>>std::ws;
-    getline(input, person.address);
+    getline(input, address);
+}
+istream& operator>>(istream &input, Person& person){
+    person.toStream(input);
     return input;
 }

@@ -35,7 +35,7 @@ class Patient:public Person {
         int getInJect();
         string getPlace();
         int getQ_day();
-        friend istream& operator>>(istream &input, Patient &patient); // nhap
+        virtual void toStream(istream& input);
         friend ostream& operator<<(ostream &ouput, Patient patient); //xuat (Minh design)TODO:
 };
 bool check(int status){
@@ -68,31 +68,29 @@ string Patient::getPlace(){
 int Patient::getQ_day(){
     return q_day;
 }
-istream& operator>>(istream &input, Patient &patient){
-    Person *p = static_cast<Person *>(&patient);
-    input>> *p;
+void Patient::toStream(istream& input){
+    Person::toStream(input);
     do{
         cout<<"NOTE - input status: healthy=0, lightly=1, heavily =2"<<endl;
         cout<<"Status: ";
         input>>std::ws;
-        input>>patient.status;
-        if(!check(patient.status)) cout<<"Error, enter again!"<<endl;
-    }while(!check(patient.status));
+        input>>status;
+        if(!check(status)) cout<<"Error, enter again!"<<endl;
+    }while(!check(status));
     cout<<"NOTE - input infection: 'NO' or id of before patients"<<endl;
     cout<<"Infection: ";
-    input>>patient.infection;
+    input>>infection;
     do{
         cout<<"Injection: ";
-        input>>patient.injection;
-        if(!check(patient.injection)) cout<<"Error, enter again!"<<endl;
-    }while(!check(patient.injection));
+        input>>injection;
+        if(!check(injection)) cout<<"Error, enter again!"<<endl;
+    }while(!check(injection));
     cout<<"Quarantine place: ";
     input>>std::ws;
-    getline(input,patient.place);
+    getline(input,place);
     cout<<"Day need to quarantine: ";
     input>>std::ws;
-    input>>patient.q_day;
-    return input;
+    input>>q_day;
 }
 ostream& operator<<(ostream& output, Patient patient){
     output<<patient.getId()<<"\t|\t"<<patient.getName()<<"\t|\t"<<patient.getDay()<<"/"<<patient.getMonth()<<"/"<<patient.getYear()<<"\t|\t"<<patient.getAddress()
