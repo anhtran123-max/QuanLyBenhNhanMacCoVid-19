@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 #include <conio.h>
 #include <cstdlib>
-
+#include <windows.h>
 class Node{
     public:
         Patient data;
@@ -172,6 +172,7 @@ void BST::sortByName(Node* root){
     change.Delete();
     DList a = inOrder(root);
     a.SortByName();
+    //TODO: thêm cái giao diện xuất
     a.print();
 }
 
@@ -314,7 +315,7 @@ void BST::F0Status(Node* root){
     cout<<"---Status of F0 patient---"<<endl;
     while(p != NULL){
         if(p->data.getInfect() == "NO"){
-            cout<<p->data.getId()<<": ";
+            cout<<"Id: "<<p->data.getId()<<": ";
             switch(p->data.getStatus()){
                 case 0:
                 cout<<"Healthy"<<endl;
@@ -345,6 +346,7 @@ void BST::statistics(Node* root){
     change.Delete();    
     int count = 0, stt = 1;
     DList d = inOrder(root);
+    d.SortByPlace();
     DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -495,6 +497,7 @@ void BST::function(void){
             case 27:
             {
                 cout <<"GOOD BYE";
+                Sleep(1000);
                 break;
             }
             default:
