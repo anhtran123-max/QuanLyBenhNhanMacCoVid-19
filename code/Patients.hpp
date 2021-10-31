@@ -496,7 +496,7 @@ void BST::function(void){
             }
             case 27:
             {
-                cout <<"GOOD BYE";
+                cout <<endl<<setw(105)<<"GOOD BYE";
                 Sleep(1000);
                 break;
             }
