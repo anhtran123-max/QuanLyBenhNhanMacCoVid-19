@@ -3,7 +3,7 @@
 #include <conio.h>
 using namespace std;
 
-int main(){
+int main(int argc, char *argv[]){
     system("color b0");
     BST list;
     char password[6];

@@ -48,7 +48,7 @@ class BST {
         void maxQ_day(Node *root); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
         void checkHealth(Node *root); //thống kê sức khỏe bệnh nhân
         void exportPatients(ofstream &file, Node *root); //xuất file
-        void display(); //xuất ra màn hình TODO:
+        void display(Node *root); //xuất ra màn hình
         void function(void); //hàm thực thi các thao tác
 };
 DList change;
@@ -175,7 +175,6 @@ void BST::sortByName(Node* root){
     //TODO: thêm cái giao diện xuất
     a.print();
 }
-
 void BST::edit(Node* root){
     Patient find;
     string id_fix;
@@ -350,7 +349,7 @@ void BST::statistics(Node* root){
     DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t\t" << "Addrress" << "\t\t|\t" << "Status" << "\t|\t" <<
     "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
@@ -369,7 +368,7 @@ void BST::statistics(Node* root){
             if(p->prev != NULL){
                 cout<<"Place: "<<p->prev->data.getPlace()<<endl;
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+                cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t\t" << "Addrress" << "\t\t|\t" << "Status" << "\t|\t" <<
                 "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
             }
@@ -398,6 +397,22 @@ void BST::maxQ_day(Node *root){
     }
     cout << "-->The number of people have quarantine day > 21: " << count <<endl;
 }
+void BST::display(Node * root){
+    change.Delete();
+    int stt = 1;
+    DList d = preOrder(root);
+    DNode *p = d.getHead();
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+    "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+    cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    while(p != NULL){
+        cout <<"| "<< stt << " |\t";
+        cout<<p->data;
+        stt++;
+        p = p->next;
+    }
+}
 void BST::exportPatients(ofstream &file, Node *root){
     change.Delete();
     DList d = inOrder(root);
@@ -415,17 +430,11 @@ void BST::exportPatients(ofstream &file, Node *root){
     }
     file.close();
 }
-// void pressAnyKey(){
-//     cout << "\n\n   ...Clik any keyboard to continute";
-//     getch();
-//     system("cls");
-// }
 void BST::function(void){
-    int n;
-    char choice_admin;
+    int n, choice_admin;
     system("color b0");
-    ifstream file_in("./code/input.in");
-    ofstream file("./code/data.txt");
+    ifstream file_in("D:/project/quan_li_benh_nhan_mac_covid/code/input.in");
+    ofstream file("D:/project/quan_li_benh_nhan_mac_covid/code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){
         Patient a;
@@ -437,64 +446,99 @@ void BST::function(void){
         system("cls");
         cout << setw(135) <<"####################### MANAGEMENT PATIENTS ######################" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
-        cout << setw(135) <<"######    Class :CNTT K61  BM CNTT - DH GTVT PH.TPHCM       ######" << endl;
+        cout << setw(135) <<"######    Class: CNTT K61  BM CNTT - DH GTVT PH.TPHCM       ######" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
-        cout << setw(135) <<"# 1-Edit patient                      5-Patients have Q-Day > 21 #" << endl;
-        cout << setw(135) <<"# 2-Statistics F by id                6-Patients at Q-Place      #" << endl;                           
-        cout << setw(135) <<"# 3-Status statistic F0               7-Print file               #" << endl; 
-        cout << setw(135) <<"# 4-Sort by name                                                 #" << endl;
-        cout << setw(135) <<"###                      ESC-Exit program                      ###" << endl;    
+        cout << setw(135) <<"# 1-Edit patient                               7-Check healthy   #" << endl;
+        cout << setw(135) <<"# 2-Statistics F by id                         8-Print file      #" << endl;                           
+        cout << setw(135) <<"# 3-Status statistic F0                        9-Print Patient   #" << endl; 
+        cout << setw(135) <<"# 4-Sort by name                               10-Remove Patient #" << endl;
+        cout << setw(135) <<"# 5-Patients have Q-Day > 21                   11-Add Patinet    #" << endl;
+        cout << setw(135) <<"# 6-Patients at Q-Place                        12-Find Patinet   #" << endl;
+        cout << setw(135) <<"######                    0-Exit program                    ######" << endl;    
         cout << setw(135) <<"#================================================================#" << endl;
         cout << setw(135) <<"##################################################################" << endl;
         cout << setw(90) <<"What is your choice: ";
         fflush(stdin);
-        choice_admin = getch();
+        cin >> choice_admin;
         cout << endl;
         switch(choice_admin){
-            case 49:
+            case 1:
             {
                 edit(root);
                 system("pause");
                 break;
             }
-            case 50:
+            case 2:
             {
                 F(root);
                 system("pause");
                 break;
             }
-            case 51:
+            case 3:
             {
                 F0Status(root);
                 system("pause");
                 break;
             }
-            case 52:
+            case 4:
             {
                 sortByName(root);
                 system("pause");
                 break;
             }
-            case 53:
-            {
-                statistics(root);
-                system("pause");
-                break;
-            }
-            case 54:
+            case 5:
             {
                 maxQ_day(root);
                 system("pause");
                 break;
             }
-            case 55:
+            case 6:
+            {
+                statistics(root);
+                system("pause");
+                break;
+            }
+            case 7:
+            {
+                checkHealth(root);
+                system("pause");
+                break;
+            }
+            case 8:
             {
                 exportPatients(file,root);
                 system("pause");
                 break;
             }
-            case 27:
+            case 9:
+            {
+                display(root);
+                system("pause");
+                break;
+            }
+            case 10:
+            {
+                remove(root);
+                display(root);
+                system("pause");
+                break;
+            }
+            case 11:
+            {
+                Add(root);
+                display(root);
+                system("pause");
+                break;
+            }
+            case 12:
+            {
+                find(root);
+                display(root);
+                system("pause");
+                break;
+            }
+            case 0:
             {
                 cout <<endl<<setw(105)<<"GOOD BYE";
                 Sleep(1000);
