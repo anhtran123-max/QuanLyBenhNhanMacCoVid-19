@@ -9,7 +9,10 @@ int main(int argc, char *argv[]){
     char password[6];
     char check_password[6] = "12345";
     int i, time = 3;
-    cout << "Please enter password (5 characters): ";
+    // cout << "Please enter password (5 characters): ";
+    cout << setw(135) <<"############################   LOGIN   ###########################" << endl;
+    cout << setw(135) <<"#================================================================#" << endl;
+    cout << setw(110) <<"Please enter password (5 characters): ";
     while(1){
         for(i = 0; i < 5; i++){
             password[i] = getch();
@@ -26,7 +29,9 @@ int main(int argc, char *argv[]){
             if(time == -1){
                 break;
             }
-            cout << "Please enter password (5 characters): ";
+            cout << setw(135) <<"############################   LOGIN   ###########################" << endl;
+            cout << setw(135) <<"#================================================================#" << endl;
+            cout << setw(135) <<"                Please enter password (5 characters): ";
             }
     }
     return 0;

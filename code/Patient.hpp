@@ -93,7 +93,7 @@ void Patient::toStream(istream& input){
     input>>q_day;
 }
 ostream& operator<<(ostream& output, Patient patient){
-    output<<patient.getId()<<"\t|\t"<<patient.getName()<<"\t|\t"<<patient.getDay()<<"/"<<patient.getMonth()<<"/"<<patient.getYear()<<"\t|\t\t"<<patient.getAddress()
+    output<<patient.getId()<<"\t|\t"<<patient.getName()<<"\t|\t"<<patient.getDay()<<"/"<<patient.getMonth()<<"/"<<patient.getYear()<<"\t|\t"<<patient.getAddress()
     <<"\t\t|\t"<<patient.status<<"\t|\t"<<patient.infection<<  "\t|\t"  << patient.injection <<"\t|\t"<<patient.place<<"\t|\t"<<patient.q_day<<"\t|"<<endl;
     output<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     return output;
