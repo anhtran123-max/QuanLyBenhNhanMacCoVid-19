@@ -170,9 +170,9 @@ Node* BST::search(Node* root, Patient val){
 }
 void BST::sortByName(Node* root){
     change.Delete();
-    DList a = inOrder(root);
+    DList a = preOrder(root);
+    DNode *p = a.getHead();
     a.SortByName();
-    //TODO: thêm cái giao diện xuất
     a.print();
 }
 void BST::edit(Node* root){
@@ -278,7 +278,7 @@ void BST::F(Node* root){
     change.Delete();
     DList d = preOrder(root);
     int arr[size];
-    int i = 0;
+    int i = 0, stt = 1;
     DNode* p = d.getHead();
     while(p != NULL && i<size){
         if(p->data.getInfect() == "NO"){
@@ -301,9 +301,16 @@ void BST::F(Node* root){
     sortId(d,arr);
     i = 0;
     p = d.getHead();
+    cout << setw(125) << "<-------- THE LIST OF F-PATIENTS BY ID -------->" << endl;
+    cout << setw(117) << "---------------------------------" << endl;
+    cout<<setw(88)<<"|STT"<< "|" << "IDs" << "|\t" << "Full Name" << "\t| " << "F |" << endl;
+    cout << setw(117) << "---------------------------------" << endl;
     while(p!=NULL && i<size){
-        cout<<"Id: "<<p->data.getId()<<" is F"<<arr[i]<<endl;
+        cout<<setw(86)<<"| "<< stt << " | "<<p->data.getId()<<" |\t"<<p->data.getName()<<
+        "\t| "<<arr[i]<<" |"<<endl;
+        cout << setw(117) << "---------------------------------" << endl;
         i++;
+        stt++;
         p = p->next;
     }
 }
@@ -349,7 +356,7 @@ void BST::statistics(Node* root){
     DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t\t" << "Addrress" << "\t\t|\t" << "Status" << "\t|\t" <<
+    cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
     "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     while(p != NULL){
@@ -466,6 +473,7 @@ void BST::function(void){
             case 1:
             {
                 edit(root);
+                display(root);
                 system("pause");
                 break;
             }

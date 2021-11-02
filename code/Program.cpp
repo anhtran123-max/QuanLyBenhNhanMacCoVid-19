@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
     // cout << "Please enter password (5 characters): ";
     cout << setw(135) <<"############################   LOGIN   ###########################" << endl;
     cout << setw(135) <<"#================================================================#" << endl;
-    cout << setw(110) <<"Please enter password (5 characters): ";
+    cout << setw(107) <<"Please enter password (5 characters): ";
     while(1){
         for(i = 0; i < 5; i++){
             password[i] = getch();
@@ -23,15 +23,15 @@ int main(int argc, char *argv[]){
             list.function();
             break;
         }else{
-            cout << "\n----------------------------------------------------";
-            cout << "\nYou still have " << time << " access" << endl;
+            cout<<endl<<setw(135) <<"------------------------------------------------------------------" << endl;
+            cout<<setw(107)<<"YOU STILL HAVE " << time << " ACCESS" << endl;
             time--;
             if(time == -1){
                 break;
             }
             cout << setw(135) <<"############################   LOGIN   ###########################" << endl;
             cout << setw(135) <<"#================================================================#" << endl;
-            cout << setw(135) <<"                Please enter password (5 characters): ";
+            cout << setw(107) <<"Please enter password (5 characters): ";
             }
     }
     return 0;
