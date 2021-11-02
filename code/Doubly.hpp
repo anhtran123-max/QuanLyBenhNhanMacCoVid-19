@@ -97,7 +97,7 @@ string in_name(string fullName){//hàm ngoài
     }
     return name;
 }
-DNode* partitionByName(DNode* left, DNode* right){//hàm ngoài
+DNode* partition(DNode* left, DNode* right){//hàm ngoài
     Patient x = right->data;//pivot ở đuôi
     DNode* i = left->prev;
     DNode* j = left;
@@ -112,40 +112,60 @@ DNode* partitionByName(DNode* left, DNode* right){//hàm ngoài
     swap(i, right);//pivot ở giữa (phía trước < pivot và sau > pivot)
     return i;//trả về pivot
 }
-void quicksortByName(DNode* left, DNode* right){//hàm ngoài
+void quicksort(DNode* left, DNode* right){//hàm ngoài
     if(right != NULL && left != right && left != right->next){
-        DNode* p = partitionByName(left, right);
-        quicksortByName(left, p->prev);
-        quicksortByName(p->next, right);
+        DNode* p = partition(left, right);
+        quicksort(left, p->prev);
+        quicksort(p->next, right);
     }
 }
 void DList::SortByName(){
-    quicksortByName(head, tail);
+    quicksort(head, tail);
 }
-DNode* partitionByPlace(DNode* left, DNode* right){//hàm ngoài
-    Patient x = right->data;//pivot ở đuôi
-    DNode* i = left->prev;
-    DNode* j = left;
-    while(j != right){
-        if(j->data.getPlace() <= x.getPlace()){
-            i = (i == NULL)? left : i->next;//i++
-            swap(i, j);
-        }
-        j = j->next;
+DNode* split(DNode* head){//hàm ngoài (tách list thành 2 nửa)
+    DNode *fast = head,*slow = head;
+    while (fast->next && fast->next->next)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
     }
-    i = (i == NULL)? left : i->next;//i++
-    swap(i, right);//pivot ở giữa (phía trước < pivot và sau > pivot)
-    return i;//trả về pivot
+    DNode *temp = slow->next;
+    slow->next = NULL;
+    return temp;
 }
-void quicksortByPlace(DNode* left, DNode* right){//hàm ngoài
-    if(right != NULL && left != right && left != right->next){
-        DNode* p = partitionByPlace(left, right);
-        quicksortByPlace(left, p->prev);
-        quicksortByPlace(p->next, right);
+DNode* merge(DNode* first, DNode* second){//hàm ngoài (trộn 2 list)
+    //Nếu list thứ nhất empty
+    if (!first)
+        return second;
+    //Nếu list thứ 2 empty
+    if (!second)
+        return first;
+    //Lấy giá trị nhỏ nhất
+    if (first->data.getPlace() < second->data.getPlace()){
+        first->next = merge(first->next,second);
+        first->next->prev = first;
+        first->prev = NULL;
+        return first;
     }
+    else{
+        second->next = merge(first,second->next);
+        second->next->prev = second;
+        second->prev = NULL;
+        return second;
+    }
+}
+DNode* mergeSort(DNode *head){//hàm ngoài (thực hiện merge sort)
+    if (!head || !head->next)
+        return head;
+    DNode *second = split(head);
+    //đệ quy cho 2 nửa
+    head = mergeSort(head);
+    second = mergeSort(second);
+    //trộn lại
+    return merge(head,second);
 }
 void DList::SortByPlace(){
-    quicksortByPlace(head, tail);
+    head = mergeSort(head);
 }
 void DList::print(){
     DNode* d = head;

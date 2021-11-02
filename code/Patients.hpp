@@ -345,7 +345,7 @@ void BST::statistics(Node* root){
     int count = 0, stt = 1;
     DList d = inOrder(root);
     d.SortByPlace();
-    DNode *p = d.getTail();
+    DNode *p = d.getHead();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
@@ -356,15 +356,15 @@ void BST::statistics(Node* root){
         cout<<p->data;
         count++;
         stt++;
-        if(p->prev == NULL){
+        if(p->next == NULL){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             break;
         }
-        if(p->prev->data.getPlace() != p->data.getPlace()){
+        if(p->next->data.getPlace() != p->data.getPlace()){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             count = 0;
             stt = 1;
-            if(p->prev != NULL){
+            if(p->next != NULL){
                 cout<<"Place: "<<p->prev->data.getPlace()<<endl;
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
@@ -372,7 +372,7 @@ void BST::statistics(Node* root){
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
             }
         }
-        p = p->prev;
+        p = p->next;
     }
 }
 void BST::maxQ_day(Node *root){
