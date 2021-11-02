@@ -224,30 +224,22 @@ void BST::remove(Node* root){
     }
 }
 void BST::find(Node* root){
-    change.Delete();
     Patient find;
     string id_find;
-    DList d = preOrder(root);
-    DNode *p = d.getHead();
     cout<<"Enter id of patient need to find: ";
     cin>>id_find;
     find.setId(id_find);
-    while(p != NULL){
-        if(search(root, find)==NULL){
+    Node* p = search(root, find);
+    if(p == NULL){
         cout<<"No such patient has been found !!"<<endl;
         return;
-        } else {
-            if(p->data.getId()==id_find){
-            cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-            cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
-            "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
-            cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-            cout <<"| "<< 1 << " |\t";
-            cout << p->data << endl;
-            }
-            break;
-        }
-        p = p->next;
+    }else{
+        cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+        "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+        cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout <<"| "<< 1 << " |\t";
+        cout <<p->data<< endl;
     }
 }
 void sortId(DList &d, int a[]){//hàm ngoài
@@ -343,8 +335,8 @@ void BST::checkHealth(Node *root){
     DList d = inOrder(root);
     DNode *p = d.getTail();
     while(p != NULL){
-        if((p->data.getInJect() == 1 || (p->data.getInJect() == 2) && p->data.getQ_day() < 21 )&& (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<p->data.getId()<<" is Safe"<<endl;  
-        else cout<<p->data.getId()<<" is not safe"<<endl;
+        if((p->data.getInJect() == 1 || (p->data.getInJect() == 2) && p->data.getQ_day() < 21 )&& (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<"Id: "<<p->data.getId()<<" is Safe"<<endl;  
+        else cout<<"Id: "<<p->data.getId()<<" is not safe"<<endl;
         p = p->prev;
     }
 }
@@ -407,8 +399,8 @@ void BST::maxQ_day(Node *root){
 void BST::display(Node * root){
     change.Delete();
     int stt = 1;
-    DList d = preOrder(root);
-    DNode *p = d.getHead();
+    DList d = inOrder(root);
+    DNode *p = d.getTail();
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
     "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
@@ -417,7 +409,7 @@ void BST::display(Node * root){
         cout <<"| "<< stt << " |\t";
         cout<<p->data;
         stt++;
-        p = p->next;
+        p = p->prev;
     }
 }
 void BST::exportPatients(ofstream &file, Node *root){
@@ -440,8 +432,8 @@ void BST::exportPatients(ofstream &file, Node *root){
 void BST::function(void){
     int n, choice_admin;
     system("color b0");
-    ifstream file_in("D:/project/quan_li_benh_nhan_mac_covid/code/input.in");
-    ofstream file("D:/project/quan_li_benh_nhan_mac_covid/code/data.txt");
+    ifstream file_in("./code/input.in");
+    ofstream file("./code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){
         Patient a;
@@ -542,7 +534,6 @@ void BST::function(void){
             case 12:
             {
                 find(root);
-                display(root);
                 system("pause");
                 break;
             }
@@ -558,6 +549,6 @@ void BST::function(void){
                 break;
             }
         }
-    } while(choice_admin != 27);
+    } while(choice_admin != 0);
     Free(root);
 }

@@ -71,6 +71,12 @@ void DList::Add(Patient val){//thêm cuối
     }
     size++;
 }
+void swap(DNode* a, DNode* b){//hàm ngoài
+    Patient temp;
+    temp = a->data;
+    a->data = b->data;
+    b->data = temp;
+}
 void DList::Delete(){
     DNode* k = NULL;
     while(head != NULL){
@@ -91,29 +97,55 @@ string in_name(string fullName){//hàm ngoài
     }
     return name;
 }
-void DList::SortByName(){
-    Patient temp;
-    for(DNode* p = head; p->next != NULL; p = p->next){
-        for(DNode* q = tail; q != p; q = q->prev){
-            if(in_name(p->data.getName())>in_name(q->data.getName())){
-                temp = p->data;
-                p->data = q->data;
-                q->data = temp;
-            }
+DNode* partitionByName(DNode* left, DNode* right){//hàm ngoài
+    Patient x = right->data;//pivot ở đuôi
+    DNode* i = left->prev;
+    DNode* j = left;
+    while(j != right){
+        if(in_name(j->data.getName()) <= in_name(x.getName())){
+            i = (i == NULL)? left : i->next;//i++
+            swap(i, j);
         }
+        j = j->next;
+    }
+    i = (i == NULL)? left : i->next;//i++
+    swap(i, right);//pivot ở giữa (phía trước < pivot và sau > pivot)
+    return i;//trả về pivot
+}
+void quicksortByName(DNode* left, DNode* right){//hàm ngoài
+    if(right != NULL && left != right && left != right->next){
+        DNode* p = partitionByName(left, right);
+        quicksortByName(left, p->prev);
+        quicksortByName(p->next, right);
+    }
+}
+void DList::SortByName(){
+    quicksortByName(head, tail);
+}
+DNode* partitionByPlace(DNode* left, DNode* right){//hàm ngoài
+    Patient x = right->data;//pivot ở đuôi
+    DNode* i = left->prev;
+    DNode* j = left;
+    while(j != right){
+        if(j->data.getPlace() <= x.getPlace()){
+            i = (i == NULL)? left : i->next;//i++
+            swap(i, j);
+        }
+        j = j->next;
+    }
+    i = (i == NULL)? left : i->next;//i++
+    swap(i, right);//pivot ở giữa (phía trước < pivot và sau > pivot)
+    return i;//trả về pivot
+}
+void quicksortByPlace(DNode* left, DNode* right){//hàm ngoài
+    if(right != NULL && left != right && left != right->next){
+        DNode* p = partitionByPlace(left, right);
+        quicksortByPlace(left, p->prev);
+        quicksortByPlace(p->next, right);
     }
 }
 void DList::SortByPlace(){
-    Patient temp;
-    for(DNode* p = head; p->next != NULL; p = p->next){
-        for(DNode* q = tail; q != p; q = q->prev){
-            if(p->data.getPlace()<q->data.getPlace()){
-                temp = p->data;
-                p->data = q->data;
-                q->data = temp;
-            }
-        }
-    }
+    quicksortByPlace(head, tail);
 }
 void DList::print(){
     DNode* d = head;
