@@ -24,32 +24,32 @@ class BST {
             root = NULL;
             size = 0;
         }
-        bool existPatient(string id); //kiểm tra trùng id
-        bool validInfection(string infection); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
+        bool existPatient(string id); //kiá»ƒm tra trÃ¹ng id
+        bool validInfection(string infection); //kiá»ƒm tra trÃ¹ng Id F0 lÃ  â€œNOâ€, cÃ¡c id cá»§a F khÃ¡c k Ä‘c trÃ¹ng nhau
         Node* add(Node* root, Patient val);
-        Node* search(Node* root, Patient val);//tìm kiếm
+        Node* search(Node* root, Patient val);//tÃ¬m kiáº¿m
         bool leftOf(Patient val, Node* root );
         bool rightOf(Patient val, Node* root );
         Patient leftMostValue(const Node* root);
         void Free( Node* root );
-        Node* erase(Node* root, Patient val);//xóa 
-        DList preOrder(Node* root);//duyệt trước
-        DList inOrder(Node* root);//duyệt giữa
-        DList posOrder(Node* root);//duyệt sau
-        void edit(Node* root); //sửa bệnh nhân
-        void Add(Node* root);//thêm bệnh nhân 
-        void remove(Node* root);//xóa bệnh nhân 
-        void find(Node* root);//tìm kiếm bệnh nhân 
-        void sortByName(Node* root); //sắp xếp theo tên
+        Node* erase(Node* root, Patient val);//xÃ³a 
+        DList preOrder(Node* root);//duyá»‡t trÆ°á»›c
+        DList inOrder(Node* root);//duyá»‡t giá»¯a
+        DList posOrder(Node* root);//duyá»‡t sau
+        void edit(Node* root); //sá»­a bá»‡nh nhÃ¢n
+        void Add(Node* root);//thÃªm bá»‡nh nhÃ¢n 
+        void remove(Node* root);//xÃ³a bá»‡nh nhÃ¢n 
+        void find(Node* root);//tÃ¬m kiáº¿m bá»‡nh nhÃ¢n 
+        void sortByName(Node* root); //sáº¯p xáº¿p theo tÃªn
         int countPlace(Node *root, string q_place);
-        void statistics(Node *root); //thống kê theo nơi điều trị
-        void F(Node* root); //thống kê các F
-        void F0Status(Node* root); // thống kê F0
-        void maxQ_day(Node *root); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
-        void checkHealth(Node *root); //thống kê sức khỏe bệnh nhân
-        void exportPatients(ofstream &file, Node *root); //xuất file
-        void display(Node *root); //xuất ra màn hình
-        void function(void); //hàm thực thi các thao tác
+        void statistics(Node *root); //thá»‘ng kÃª theo nÆ¡i Ä‘iá»u trá»‹
+        void F(Node* root); //thá»‘ng kÃª cÃ¡c F
+        void F0Status(Node* root); // thá»‘ng kÃª F0
+        void maxQ_day(Node *root); //cÃ¡c bá»‡nh nhÃ¢n cÃ³ sá»‘ ngÃ y cÃ¡ch ly lÃ¢u (>21 ngÃ y)
+        void checkHealth(Node *root); //thá»‘ng kÃª sá»©c khá»e bá»‡nh nhÃ¢n
+        void exportPatients(ofstream &file, Node *root); //xuáº¥t file
+        void display(Node *root); //xuáº¥t ra mÃ n hÃ¬nh
+        void function(void); //hÃ m thá»±c thi cÃ¡c thao tÃ¡c
 };
 DList change;
 DList BST::preOrder(Node* root){
@@ -76,7 +76,7 @@ DList BST::posOrder(Node* root){
     }
     return change;
 }
-bool BST::existPatient(string id){ //duyệt trước
+bool BST::existPatient(string id){ //duyá»‡t trÆ°á»›c
     change.Delete();
     DList d = preOrder(root);
     DNode* p = d.getHead();
@@ -86,7 +86,7 @@ bool BST::existPatient(string id){ //duyệt trước
     }
     return false;
 }
-bool BST::validInfection(string infection){ //duyệt sau
+bool BST::validInfection(string infection){ //duyá»‡t sau
     if(infection == "NO") return true;
     change.Delete();
     DList d = posOrder(root);
@@ -97,7 +97,7 @@ bool BST::validInfection(string infection){ //duyệt sau
     }
     return false;
 }
-bool compare(string str1, string str2){ //hàm ngoài
+bool compare(string str1, string str2){ //hÃ m ngoÃ i
     int n=str1.length();
     int m=str2.length();
     if(n==m)
@@ -202,7 +202,7 @@ void BST::edit(Node* root){
 }
 void BST::Add(Node* root){
     Patient val;
-    cout<<"Enter information of patient need to add: ";
+    cout<<"Enter information of patient need to add: " << endl;
     cin>>val;
     add(root,val);
     size++;
@@ -242,7 +242,7 @@ void BST::find(Node* root){
         cout <<p->data<< endl;
     }
 }
-void sortId(DList &d, int a[]){//hàm ngoài
+void sortId(DList &d, int a[]){//hÃ m ngoÃ i
     Patient temp;
     int k;
     int i = 0;
@@ -310,34 +310,54 @@ void BST::F0Status(Node* root){
     change.Delete();
     DList d = inOrder(root);
     DNode* p = d.getTail();
-    cout<<"---Status of F0 patient---"<<endl;
+    int stt = 1;
+    cout << setw(125) << "<------ STATUS OF F0 PATIENT ------>"<<endl;
+    cout << setw(129) << "----------------------------------------------" << endl;
+    cout << setw(87)  <<"|STT"<< "|" << "IDs" << "|\t" << "Full Name" << "\t|\t" << "Status\t|" << endl;
+    cout << setw(129) << "----------------------------------------------" << endl;
     while(p != NULL){
         if(p->data.getInfect() == "NO"){
-            cout<<"Id: "<<p->data.getId()<<" is ";
+            cout<<setw(85)<<"| "<< stt << " | "<<p->data.getId()<<" |\t"<<p->data.getName()<<
+            "\t|\t";
             switch(p->data.getStatus()){
                 case 0:
-                cout<<"Healthy"<<endl;
+                cout<<"Healthy\t|"<<endl;
                 break;
                 case 1:
-                cout<<"Lightly"<<endl;
+                cout<<"Lightly\t|"<<endl;
                 break;
                 default:
-                cout<<"Heavily"<<endl;
+                cout<<"Heavily\t|"<<endl;
                 break;
             }
+            stt++;
+            cout << setw(129) << "----------------------------------------------" << endl;
         }
         p = p->prev;
     }
 }
-// thong ke noi cach ly
 void BST::checkHealth(Node *root){
     change.Delete();
     DList d = inOrder(root);
     DNode *p = d.getTail();
+    int stt = 1;
+    cout << setw(125) << "<------ PATIENT HEALTHY LIST NOW ------>"<<endl;
+    cout << setw(129) << "----------------------------------------------" << endl;
+    cout << setw(87)  <<"|STT"<< "|" << "IDs" << "|\t" << "Full Name" << "\t|\t" << "Health\t|" << endl;
+    cout << setw(129) << "----------------------------------------------" << endl;
     while(p != NULL){
-        if((p->data.getInJect() == 1 || (p->data.getInJect() == 2) && p->data.getQ_day() < 21 )&& (p->data.getStatus() ==0 ||p->data.getStatus() ==1)) cout<<"Id: "<<p->data.getId()<<" is Safe"<<endl;  
-        else cout<<"Id: "<<p->data.getId()<<" is not safe"<<endl;
+        if((p->data.getInJect() == 1 || (p->data.getInJect() == 2) && p->data.getQ_day() < 21 )
+        && (p->data.getStatus() ==0 ||p->data.getStatus() ==1))
+        {
+            cout<<setw(85)<<"| "<< stt << " | "<<p->data.getId()<<" |\t"<<p->data.getName()<<"\t|\t"<<"Well\t|"<<endl;
+            cout << setw(129) << "----------------------------------------------" << endl;
+        }
+        else{
+            cout<<setw(85)<<"| "<< stt << " | "<<p->data.getId()<<" |\t"<<p->data.getName()<<"\t|\t"<<"Bad \t|"<<endl;
+            cout <<setw(129) << "----------------------------------------------" << endl;
+        }
         p = p->prev;
+        stt++;
     }
 }
 void BST::statistics(Node* root){
@@ -345,7 +365,7 @@ void BST::statistics(Node* root){
     int count = 0, stt = 1;
     DList d = inOrder(root);
     d.SortByPlace();
-    DNode *p = d.getHead();
+    DNode *p = d.getTail();
     cout<<"Place: "<<p->data.getPlace()<<endl;
     cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
@@ -356,15 +376,15 @@ void BST::statistics(Node* root){
         cout<<p->data;
         count++;
         stt++;
-        if(p->next == NULL){
+        if(p->prev == NULL){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             break;
         }
-        if(p->next->data.getPlace() != p->data.getPlace()){
+        if(p->prev->data.getPlace() != p->data.getPlace()){
             cout<<"Place "<<p->data.getPlace()<<" has "<<count<<" patients"<<endl;
             count = 0;
             stt = 1;
-            if(p->next != NULL){
+            if(p->prev != NULL){
                 cout<<"Place: "<<p->prev->data.getPlace()<<endl;
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
@@ -372,7 +392,7 @@ void BST::statistics(Node* root){
                 cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
             }
         }
-        p = p->next;
+        p = p->prev;
     }
 }
 void BST::maxQ_day(Node *root){
@@ -432,8 +452,8 @@ void BST::exportPatients(ofstream &file, Node *root){
 void BST::function(void){
     int n, choice_admin;
     system("color b0");
-    ifstream file_in("./code/input.in");
-    ofstream file("./code/data.txt");
+    ifstream file_in("D:/project/quan_li_benh_nhan_mac_covid/code/input.in");
+    ofstream file("D:/project/quan_li_benh_nhan_mac_covid/code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){
         Patient a;
@@ -457,7 +477,7 @@ void BST::function(void){
         cout << setw(135) <<"######                    0-Exit program                    ######" << endl;    
         cout << setw(135) <<"#================================================================#" << endl;
         cout << setw(135) <<"##################################################################" << endl;
-        cout << setw(90) <<"What is your choice: ";
+        cout << setw(90)  <<"What is your choice: ";
         fflush(stdin);
         cin >> choice_admin;
         cout << endl;
