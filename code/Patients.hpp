@@ -24,32 +24,32 @@ class BST {
             root = NULL;
             size = 0;
         }
-        bool existPatient(string id); //kiá»ƒm tra trÃ¹ng id
-        bool validInfection(string infection); //kiá»ƒm tra trÃ¹ng Id F0 lÃ  â€œNOâ€, cÃ¡c id cá»§a F khÃ¡c k Ä‘c trÃ¹ng nhau
+        bool existPatient(string id); //kiểm tra trùng id
+        bool validInfection(string infection); //kiểm tra trùng Id F0 là “NO”, các id của F khác k đc trùng nhau
         Node* add(Node* root, Patient val);
-        Node* search(Node* root, Patient val);//tÃ¬m kiáº¿m
+        Node* search(Node* root, Patient val);//tìm kiếm
         bool leftOf(Patient val, Node* root );
         bool rightOf(Patient val, Node* root );
         Patient leftMostValue(const Node* root);
         void Free( Node* root );
-        Node* erase(Node* root, Patient val);//xÃ³a 
-        DList preOrder(Node* root);//duyá»‡t trÆ°á»›c
-        DList inOrder(Node* root);//duyá»‡t giá»¯a
-        DList posOrder(Node* root);//duyá»‡t sau
-        void edit(Node* root); //sá»­a bá»‡nh nhÃ¢n
-        void Add(Node* root);//thÃªm bá»‡nh nhÃ¢n 
-        void remove(Node* root);//xÃ³a bá»‡nh nhÃ¢n 
-        void find(Node* root);//tÃ¬m kiáº¿m bá»‡nh nhÃ¢n 
-        void sortByName(Node* root); //sáº¯p xáº¿p theo tÃªn
+        Node* erase(Node* root, Patient val);//xóa 
+        DList preOrder(Node* root);//duyệt trước
+        DList inOrder(Node* root);//duyệt giữa
+        DList posOrder(Node* root);//duyệt sau
+        void edit(Node* root); //sửa bệnh nhân
+        void Add(Node* root);//thêm bệnh nhân 
+        void remove(Node* root);//xóa bệnh nhân 
+        void find(Node* root);//tìm kiếm bệnh nhân 
+        void sortByName(Node* root); //sắp xếp theo tên
         int countPlace(Node *root, string q_place);
-        void statistics(Node *root); //thá»‘ng kÃª theo nÆ¡i Ä‘iá»u trá»‹
-        void F(Node* root); //thá»‘ng kÃª cÃ¡c F
-        void F0Status(Node* root); // thá»‘ng kÃª F0
-        void maxQ_day(Node *root); //cÃ¡c bá»‡nh nhÃ¢n cÃ³ sá»‘ ngÃ y cÃ¡ch ly lÃ¢u (>21 ngÃ y)
-        void checkHealth(Node *root); //thá»‘ng kÃª sá»©c khá»e bá»‡nh nhÃ¢n
-        void exportPatients(ofstream &file, Node *root); //xuáº¥t file
-        void display(Node *root); //xuáº¥t ra mÃ n hÃ¬nh
-        void function(void); //hÃ m thá»±c thi cÃ¡c thao tÃ¡c
+        void statistics(Node *root); //thống kê theo nơi điều trị
+        void F(Node* root); //thống kê các F
+        void F0Status(Node* root); // thống kê F0
+        void maxQ_day(Node *root); //các bệnh nhân có số ngày cách ly lâu (>21 ngày)
+        void checkHealth(Node *root); //thống kê sức khỏe bệnh nhân
+        void exportPatients(ofstream &file, Node *root); //xuất file
+        void display(Node *root); //xuất ra màn hình 
+        void function(void); //hàm thực thi các thao tác
 };
 DList change;
 DList BST::preOrder(Node* root){
@@ -76,7 +76,7 @@ DList BST::posOrder(Node* root){
     }
     return change;
 }
-bool BST::existPatient(string id){ //duyá»‡t trÆ°á»›c
+bool BST::existPatient(string id){ //duyệt trước
     change.Delete();
     DList d = preOrder(root);
     DNode* p = d.getHead();
@@ -86,7 +86,7 @@ bool BST::existPatient(string id){ //duyá»‡t trÆ°á»›c
     }
     return false;
 }
-bool BST::validInfection(string infection){ //duyá»‡t sau
+bool BST::validInfection(string infection){ //duyệt sau
     if(infection == "NO") return true;
     change.Delete();
     DList d = posOrder(root);
@@ -97,7 +97,7 @@ bool BST::validInfection(string infection){ //duyá»‡t sau
     }
     return false;
 }
-bool compare(string str1, string str2){ //hÃ m ngoÃ i
+bool compare(string str1, string str2){ //hàm ngoài 
     int n=str1.length();
     int m=str2.length();
     if(n==m)
@@ -242,7 +242,7 @@ void BST::find(Node* root){
         cout <<p->data<< endl;
     }
 }
-void sortId(DList &d, int a[]){//hÃ m ngoÃ i
+void sortId(DList &d, int a[]){//hàm ngoài 
     Patient temp;
     int k;
     int i = 0;
