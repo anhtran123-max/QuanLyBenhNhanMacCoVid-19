@@ -226,22 +226,26 @@ void BST::remove(Node* root){
 void BST::find(Node* root){
     Patient find;
     string id_find;
-    cout<<"Enter id of patient need to find: ";
-    cin>>id_find;
-    find.setId(id_find);
-    Node* p = search(root, find);
-    if(p == NULL){
-        cout<<"No such patient has been found !!"<<endl;
-        return;
-    }else{
-        cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-        cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
-        "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
-        cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-        cout <<"| "<< 1 << " |\t";
-        cout <<p->data<< endl;
+    bool flag = true;
+    while(flag){
+        cout<<"Enter id of patient need to find: ";
+        cin>>id_find;
+        find.setId(id_find);
+        Node* p = search(root, find);
+        if(p == NULL){
+            cout<<"No such patient has been found !!"<<endl;
+        } else {
+            cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout<< "|STT"<< "|\t" << "ID" << "\t|\t" << "Full Name" << "\t|\t" << "Birth" << "\t\t|\t" << "Addrress" << "\t|\t" << "Status" << "\t|\t" <<
+            "Infect" << "\t|\t" << "Inject" << "\t|\t" << "Q_Place" << "\t|\t" << "Q_Day\t|" << endl;
+            cout<<"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout <<"| "<< 1 << " |\t";
+            cout <<p->data<< endl;
+            flag = false;
+        }
     }
 }
+
 void sortId(DList &d, int a[]){//hàm ngoài 
     Patient temp;
     int k;
@@ -468,12 +472,12 @@ void BST::function(void){
         cout << setw(135) <<"######    Class: CNTT K61  BM CNTT - DH GTVT PH.TPHCM       ######" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
         cout << setw(135) <<"#================================================================#" << endl;
-        cout << setw(135) <<"# 1-Edit patient                               7-Check healthy   #" << endl;
+        cout << setw(135) <<"# 1-Find Patient                               7-Check healthy   #" << endl;
         cout << setw(135) <<"# 2-Statistics F by id                         8-Print file      #" << endl;                           
         cout << setw(135) <<"# 3-Status statistic F0                        9-Print Patient   #" << endl; 
         cout << setw(135) <<"# 4-Sort by name                               10-Remove Patient #" << endl;
         cout << setw(135) <<"# 5-Patients have Q-Day > 21                   11-Add Patinet    #" << endl;
-        cout << setw(135) <<"# 6-Patients at Q-Place                        12-Find Patinet   #" << endl;
+        cout << setw(135) <<"# 6-Patients at Q-Place                        12-Edit Patinet   #" << endl;
         cout << setw(135) <<"######                    0-Exit program                    ######" << endl;    
         cout << setw(135) <<"#================================================================#" << endl;
         cout << setw(135) <<"##################################################################" << endl;
@@ -484,8 +488,7 @@ void BST::function(void){
         switch(choice_admin){
             case 1:
             {
-                edit(root);
-                display(root);
+                find(root);
                 system("pause");
                 break;
             }
@@ -553,7 +556,8 @@ void BST::function(void){
             }
             case 12:
             {
-                find(root);
+                edit(root);
+                display(root);
                 system("pause");
                 break;
             }
