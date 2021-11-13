@@ -452,8 +452,8 @@ void BST::exportPatients(ofstream &file, Node *root){
 void BST::function(void){
     int n, choice_admin;
     system("color b0");
-    ifstream file_in("D:/project/quan_li_benh_nhan_mac_covid/code/input.in");
-    ofstream file("D:/project/quan_li_benh_nhan_mac_covid/code/data.txt");
+    ifstream file_in("./code/input.in");
+    ofstream file("./code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){
         Patient a;
