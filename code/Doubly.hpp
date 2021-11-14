@@ -87,15 +87,17 @@ void DList::Delete(){
     setSize(0);
 }
 string in_name(string fullName){//hàm ngoài
-    string name;
-    int i;
-    for(i = fullName.length()-1; i>=0; i--){
-        if(fullName[i] == ' ') break;
+    int pos = 0;
+    string name = ' ' + fullName;
+    string merge;
+    for (int i = name.length()-1; i >= 0; i--){
+        ++pos;
+        if (name[i] == ' '){
+            merge += name.substr(i+1, pos-1);
+            pos = 0;
+        }
     }
-    for(int j = i+1; j<fullName.length(); j++){
-        name += fullName[j];
-    }
-    return name;
+    return merge;
 }
 DNode* partition(DNode* left, DNode* right){//hàm ngoài
     Patient x = right->data;//pivot ở đuôi
