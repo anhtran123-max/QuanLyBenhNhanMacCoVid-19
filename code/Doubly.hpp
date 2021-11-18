@@ -27,7 +27,6 @@ class DList{
         DNode* getTail();
         int getSize();
         void setSize(int size);
-        DNode* CreateNode(Patient val);
         void push(Patient val);
         void Add(Patient val);
         void Delete();

@@ -9,7 +9,6 @@ int main(int argc, char *argv[]){
     char password[6];
     char check_password[6] = "12345";
     int i, time = 3;
-    // cout << "Please enter password (5 characters): ";
     cout << setw(135) <<"############################   LOGIN   ###########################" << endl;
     cout << setw(135) <<"#================================================================#" << endl;
     cout << setw(107) <<"Please enter password (5 characters): ";
