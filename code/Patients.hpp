@@ -202,8 +202,16 @@ void BST::edit(Node* root){
 }
 void BST::Add(Node* root){
     Patient val;
-    cout<<"Enter information of patient need to add: " << endl;
-    cin>>val;
+    do{
+        cout<<"Enter information of patient need to add: " << endl;
+        cin>>val;
+        if(existPatient(val.getId())){
+                cout<<"Same id, enter again!!"<<endl;
+            }
+        if(!validInfection(val.getInfect())){
+            cout<<"Invalid infection!!"<<endl;
+        }
+    }while(existPatient(val.getId()) ||(!validInfection(val.getInfect())));
     add(root,val);
     size++;
     cout<<"Add success!"<<endl;
@@ -456,8 +464,8 @@ void BST::exportPatients(ofstream &file, Node *root){
 void BST::function(void){
     int n, choice_admin;
     system("color b0");
-    ifstream file_in("./code/input.in");
-    ofstream file("./code/data.txt");
+    ifstream file_in("D:/BTL/code/input.in");
+    ofstream file("D:/BTL/code/data.txt");
     file_in>>n;
     for(int i=0; i<n; i++){
         Patient a;
